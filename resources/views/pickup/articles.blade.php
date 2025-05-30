@@ -19,7 +19,6 @@
                 le tarif estimé pour votre commande.
             </p>
         </div>
-
         <article-selector :articles="{{ $articles->toJson() }}" post-articles-url="{{ route('post_articles') }}"
             cancel-url="{{ route('collecte') }}" csrf-token="{{ csrf_token() }}"></article-selector>
 

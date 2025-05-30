@@ -43,7 +43,7 @@ class OrderConfirmation extends Notification
             ->subject('Confirmation de commande')
             ->greeting('Bonjour ' . $notifiable->firstname . ' 👋')
             ->line('Merci d\'avoir passé une commande sur notre site !')
-            ->line('Voici les détails de votre commande n°' . $this->order->id)
+            ->line('Voici les détails de votre commande n°' . $this->order->order_number)
             ->line('Total : ' . $this->total . ' €')
             ->line('Nous vous remercions pour votre achat et espérons vous revoir bientôt !')
             ->salutation('À bientôt, l’équipe KLIN KLIN 👕');

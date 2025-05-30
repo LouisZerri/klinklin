@@ -2,8 +2,13 @@
     <div class="content-wrapper">
         <!-- Colonne principale avec articles -->
         <div class="main-column">
+            <!-- Info pagination en haut -->
+            <div class="pagination-info">
+                <span>{{ paginationInfo.start }}-{{ paginationInfo.end }} sur {{ paginationInfo.total }} articles</span>
+            </div>
+
             <div class="articles-grid">
-                <div v-for="article in filteredArticles" :key="article.id" class="article-card d-flex">
+                <div v-for="article in paginatedArticles" :key="article.id" class="article-card d-flex">
                     <img :src="article.image_url" class="article-image" :alt="article.name" />
                     <div class="article-details">
                         <div class="article-info">
@@ -33,6 +38,72 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container" v-if="totalPages > 1">
+                <nav class="pagination-nav">
+                    <button class="pagination-btn prev-btn" @click="prevPage" :disabled="currentPage === 1"
+                        :class="{ disabled: currentPage === 1 }">
+                        <i class="fas fa-chevron-left"></i>
+                        Précédent
+                    </button>
+
+                    <div class="pagination-numbers">
+                        <button v-for="page in Math.min(totalPages, 7)" :key="page" class="pagination-number"
+                            :class="{ active: page === currentPage }" @click="goToPage(page)">
+                            {{ page }}
+                        </button>
+
+                        <!-- Affichage avec ellipses pour beaucoup de pages -->
+                        <template v-if="totalPages > 7">
+                            <button v-if="currentPage <= 4" v-for="page in 5" :key="page" class="pagination-number"
+                                :class="{ active: page === currentPage }" @click="goToPage(page)">
+                                {{ page }}
+                            </button>
+                            <span v-if="currentPage <= 4" class="pagination-ellipsis">...</span>
+                            <button v-if="currentPage <= 4" class="pagination-number" @click="goToPage(totalPages)">
+                                {{ totalPages }}
+                            </button>
+
+                            <button v-if="currentPage > 4 && currentPage < totalPages - 3" class="pagination-number"
+                                @click="goToPage(1)">
+                                1
+                            </button>
+                            <span v-if="currentPage > 4 && currentPage < totalPages - 3"
+                                class="pagination-ellipsis">...</span>
+                            <button v-if="currentPage > 4 && currentPage < totalPages - 3"
+                                v-for="page in [currentPage - 1, currentPage, currentPage + 1]" :key="page"
+                                class="pagination-number" :class="{ active: page === currentPage }"
+                                @click="goToPage(page)">
+                                {{ page }}
+                            </button>
+                            <span v-if="currentPage > 4 && currentPage < totalPages - 3"
+                                class="pagination-ellipsis">...</span>
+                            <button v-if="currentPage > 4 && currentPage < totalPages - 3" class="pagination-number"
+                                @click="goToPage(totalPages)">
+                                {{ totalPages }}
+                            </button>
+
+                            <button v-if="currentPage >= totalPages - 3" class="pagination-number" @click="goToPage(1)">
+                                1
+                            </button>
+                            <span v-if="currentPage >= totalPages - 3" class="pagination-ellipsis">...</span>
+                            <button v-if="currentPage >= totalPages - 3"
+                                v-for="page in [totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages].filter(p => p > 1)"
+                                :key="page" class="pagination-number" :class="{ active: page === currentPage }"
+                                @click="goToPage(page)">
+                                {{ page }}
+                            </button>
+                        </template>
+                    </div>
+
+                    <button class="pagination-btn next-btn" @click="nextPage" :disabled="currentPage === totalPages"
+                        :class="{ disabled: currentPage === totalPages }">
+                        Suivant
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </nav>
             </div>
 
             <!-- Actions et résumé -->
@@ -104,7 +175,7 @@
                         <label for="enfant">Enfant</label>
                     </div>
                     <div class="filter-option">
-                        <input type="checkbox" id="bebe" v-model="filters.usages" value="Bebe" />
+                        <input type="checkbox" id="bebe" v-model="filters.usages" value="Bébé" />
                         <label for="bebe">Bébé</label>
                     </div>
                 </div>
@@ -135,7 +206,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted, watch } from 'vue'
 
 // Props
 const props = defineProps({
@@ -161,11 +232,66 @@ const props = defineProps({
 const quantities = ref({})
 const selectedWeights = ref({})
 const filters = reactive({
-    maxPrice: 30,
+    maxPrice: 100,
     types: [],
     usages: [],
     weights: []
 })
+const currentPage = ref(1)
+const itemsPerPage = 6
+
+const totalPages = computed(() => {
+    return Math.ceil(filteredArticles.value.length / itemsPerPage)
+})
+
+const paginatedArticles = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage
+    const end = start + itemsPerPage
+    return filteredArticles.value.slice(start, end)
+})
+
+const paginationInfo = computed(() => {
+    const start = (currentPage.value - 1) * itemsPerPage + 1
+    const end = Math.min(currentPage.value * itemsPerPage, filteredArticles.value.length)
+    return {
+        start,
+        end,
+        total: filteredArticles.value.length
+    }
+})
+
+// Méthodes de pagination
+const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page
+        // Scroll vers le haut de la grille d'articles
+        const articlesGrid = document.querySelector('.articles-grid')
+        if (articlesGrid) {
+            articlesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+    }
+}
+
+const nextPage = () => {
+    if (currentPage.value < totalPages.value) {
+        goToPage(currentPage.value + 1)
+    }
+}
+
+const prevPage = () => {
+    if (currentPage.value > 1) {
+        goToPage(currentPage.value - 1)
+    }
+}
+
+watch(
+    () => [filters.maxPrice, filters.types, filters.usages, filters.weights],
+    () => {
+        currentPage.value = 1
+    },
+    { deep: true }
+)
+
 
 // Méthodes utilitaires
 const normalize = (str) => {
@@ -175,9 +301,20 @@ const normalize = (str) => {
         .replace(/[\u0300-\u036f]/g, '')
 }
 
-const getWeightCategory = (baseWeight) => {
-    if (baseWeight < 0.4) return 'leger'
-    if (baseWeight <= 0.8) return 'moyen'
+const getWeightCategory = (weightRanges) => {
+    if (!weightRanges || typeof weightRanges !== 'object') return 'leger'
+
+    // Calculer le poids moyen en prenant la première range disponible
+    const firstLabel = Object.keys(weightRanges)[0]
+    if (!firstLabel) return 'leger'
+
+    const range = weightRanges[firstLabel]
+    if (!Array.isArray(range) || range.length < 2) return 'leger'
+
+    const avgWeight = (range[0] + range[1]) / 2
+
+    if (avgWeight < 0.4) return 'leger'
+    if (avgWeight <= 0.8) return 'moyen'
     return 'lourd'
 }
 
@@ -191,7 +328,6 @@ const capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
-
 // Computed properties
 const filteredArticles = computed(() => {
     return props.articles.filter(article => {
@@ -203,7 +339,13 @@ const filteredArticles = computed(() => {
         // Filtre type
         if (filters.types.length > 0) {
             const normalizedType = normalize(article.type || '')
-            const selectedTypes = filters.types.map(t => normalize(t))
+            const selectedTypes = filters.types.map(t => {
+                // Conversion des valeurs du filtre vers les valeurs de la base
+                if (t === 'vetements') return normalize('Vêtements')
+                if (t === 'linge-maison') return normalize('Linge de maison')
+                if (t === 'delicat') return normalize('Délicat')
+                return normalize(t)
+            })
             if (!selectedTypes.includes(normalizedType)) return false
         }
 
@@ -218,7 +360,7 @@ const filteredArticles = computed(() => {
 
         // Filtre poids
         if (filters.weights.length > 0) {
-            const weightCategory = getWeightCategory(article.base_weight)
+            const weightCategory = getWeightCategory(article.weight_ranges)
             const selectedWeights = filters.weights.map(w => normalize(w))
             if (!selectedWeights.includes(normalize(weightCategory))) return false
         }
@@ -309,6 +451,21 @@ const handleSubmit = (event) => {
 
 // Initialisation au montage du composant
 onMounted(() => {
+    // Calculer le prix maximum des articles
+    const maxPrice = Math.max(...props.articles.map(article =>
+        parseFloat(article.unit_price) || 0
+    ))
+
+    // Mettre à jour le filtre avec le prix max + une marge
+    filters.maxPrice = Math.ceil(maxPrice + 10)
+
+    // Mettre à jour aussi l'attribut max du slider
+    const priceSlider = document.querySelector('.price-slider')
+    if (priceSlider) {
+        priceSlider.setAttribute('max', filters.maxPrice)
+    }
+
+    // Initialisation des poids et quantités pour chaque article
     props.articles.forEach(article => {
         selectedWeights.value[article.id] = getFirstWeightRange(article)
         quantities.value[article.id] = 0

@@ -19,6 +19,7 @@
 @import "./components/_sidebar.css";
 @import "./components/_progress-stepper.css";
 @import "./components/_toasts.css";
+@import "./components/_pagination.css";
 
 /* Utilitaires */
 @import "./utils/_animations.css";
