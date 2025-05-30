@@ -46,7 +46,7 @@ class StripeCheckoutController extends Controller
         $userId = Auth::id();
 
         $order = Order::where('user_id', $userId)
-            ->where('status', 'Prévu')
+            ->where('status', 'En attente')
             ->first();
 
         $total = number_format($order->subtotal + $order->expedition + $order->tax, 0, ',', ' ');
