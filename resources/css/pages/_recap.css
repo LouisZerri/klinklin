@@ -84,7 +84,7 @@
 
 .article-summary {
     flex: 1;
-    max-width: 50%;
+    max-width: 100%;
     background: rgba(240, 239, 242, 0.5);
     padding: 32px 20px;
     border-radius: 12px;
@@ -92,7 +92,7 @@
 
 .recap-summary-box {
     flex: 1;
-    max-width: 50%;
+    max-width: 100%;
     background: #f8f5ff;
     padding: 32px;
     border-radius: 20px;

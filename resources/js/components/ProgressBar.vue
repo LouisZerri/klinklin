@@ -36,7 +36,7 @@ const progressFillStyle = computed(() => {
             1: '60px',
             2: '160px',
             3: '280px',
-            4: '400px'
+            4: '450px'
         };
 
         return {

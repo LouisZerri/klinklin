@@ -60,7 +60,7 @@
                 </defs>
             </svg>
         </div>
-    @elseif (Str::contains(Route::currentRouteName(), ['collecte', 'article']))
+    @elseif (Str::contains(Route::currentRouteName(), ['collecte', 'article', 'checkout']))
         <div class="logo-mobile">
             <div class="icon-circle">
                 <i class="fa-solid fa-file"></i>

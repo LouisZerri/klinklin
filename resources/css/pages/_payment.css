@@ -9,3 +9,29 @@
     font-weight: 700;
     font-size: 48px;
 }
+
+@media (max-width: 1350px){
+    main.payment-content .recap-wrapper {
+       flex-direction: column-reverse;
+        align-items: center;
+    } 
+}
+
+
+@media (max-width: 1100px) {
+    .payment-content {
+        margin-left: 0;
+        max-width: 100%;
+    }
+
+    main.payment-content .recap-wrapper {
+       flex-direction: row;
+    } 
+}
+
+@media (max-width: 990px){
+     main.payment-content .recap-wrapper {
+       flex-direction: column-reverse;
+        align-items: center;
+    } 
+}

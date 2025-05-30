@@ -45,15 +45,18 @@ window.dispatchEvent(new CustomEvent("cart-updated", {
     font-family: "Montserrat", sans-serif;
 }
 
-form {
-    width: 30vw;
+#payment-form {
+    width: 80vh;
     min-width: 500px;
+    max-width: 100%;
+    padding: 32px 20px;
+}
+
+form {
     align-self: center;
     box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
         0px 2px 5px 0px rgba(50, 50, 93, 0.1), 0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
     flex: 1;
-    max-width: 50%;
-    padding: 32px 20px;
     border-radius: 12px;
 }
 
@@ -284,12 +287,64 @@ td {
     }
 }
 
-@media only screen and (max-width: 600px) {
-
-    form,
-    #payment-status {
-        width: 80vw;
-        min-width: initial;
+@media (max-width: 780px) {
+    #payment-form {
+        margin-bottom: 80px;
     }
 }
+
+@media (max-width: 550px) {
+    /* Réduire la taille des inputs */
+    .input-floating-wrapper .booking-input {
+        font-size: 14px;  
+        padding: 12px 10px;
+        height: 48px; 
+    }
+    /* Réduire la largeur des inputs */
+    .input-floating-wrapper {
+        width: 100%; 
+    }
+
+    /* Réduit la largeur du formulaire */
+    form {
+        width: 90vw;
+        max-width: 400px;
+        padding: 20px 16px;
+        box-shadow: none;
+    }
+
+    /* Mettre les éléments en colonne, y compris le bouton */
+    #payment-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    /* Mettre le bouton en haut */
+    button {
+        padding: 10px 20px;
+        font-size: 14px;
+        width: auto;
+        max-width: 250px;
+        margin: 0 auto;    
+    }
+
+    /* Réduit la taille du spinner */
+    .spinner {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Ajuster l'espace sous les champs de paiement */
+    #payment-element {
+        margin-bottom: 16px;
+    }
+
+    /* Ajuster le message de statut */
+    #payment-message {
+        font-size: 14px;
+    }
+}
+
 </style>

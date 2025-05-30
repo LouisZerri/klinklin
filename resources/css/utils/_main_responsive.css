@@ -349,7 +349,7 @@
     }
 
     .register-left {
-        width: 35%; /* Rétréci légèrement */
+        width: 35%;
     }
 
     .register-right {
@@ -358,7 +358,7 @@
     }
 
     .logo-hanger {
-        width: 200px; /* Plus petit */
+        width: 200px; 
         height: auto;
         left: 50%;
         transform: translateX(-50%);
@@ -391,7 +391,7 @@
 /* Tablette portrait (jusqu'à 820px) */
 @media (max-width: 820px) {
     .register-left {
-        width: 30%; /* Encore plus petit */
+        width: 30%;
     }
 
     .register-right {
@@ -424,14 +424,14 @@
     .register-left {
         width: 100%;
         padding: 2rem 1rem;
-        order: 2; /* Change l'ordre pour mettre le formulaire en premier */
+        order: 2;
         min-height: 350px;
     }
 
     .register-right {
         width: 100%;
         padding: 2rem 1.5rem;
-        order: 1; /* Met le formulaire en premier */
+        order: 1;
     }
 
     .logo-hanger {
@@ -580,6 +580,26 @@
     }
 }
 
+@media (max-width: 400px) {
+    .icon-deco-violet {
+        position: absolute;
+        left: 10rem;
+        top: 10rem;
+    }
+
+    .icon-cleaning {
+        position: absolute;
+        left: 15rem;
+        top: 16rem;
+    }
+
+    .icon-drop {
+        position: absolute;
+        top: 10rem;
+        left: 16rem;
+    }
+}
+
 /* Ajustements supplémentaires pour petits écrans */
 @media (max-width: 320px) {
     .iti input {
@@ -603,3 +623,22 @@
         padding: 10px 16px;
     }
 }
+
+@media (max-width: 450px){
+    .section-title, .section-desc {
+        text-align: center;
+    }
+}
+
+@media (max-width: 630px){
+    .steps-image > img {
+        padding: 0 20px 80px 20px;
+    }
+}
+
+@media (max-width: 490px){
+    .steps-image > img {
+        padding: 0 80px 80px 80px;
+    }
+}
+
