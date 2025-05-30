@@ -427,6 +427,12 @@
 
 /* ========== RESPONSIVE LOGIN ========== */
 
+@media (max-width: 1800px) {
+    .chat-widget {
+        bottom: 10px;
+    }
+}
+
 @media (max-width: 1440px) {
     .login-container {
         flex-direction: column;
