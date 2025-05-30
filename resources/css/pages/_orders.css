@@ -1,0 +1,267 @@
+.orders-content {
+    margin-left: 356px;
+    padding: 2rem;
+    max-width: calc(100% - 356px);
+    box-sizing: border-box;
+}
+
+.orders-header h2 {
+    font-weight: 700;
+    font-size: 48px;
+}
+
+.orders-header p {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* Texte */
+.button-text {
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+/* Chevron */
+.chevron-down {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+
+    position: relative;
+}
+
+.chevron-down::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid #14081c;
+    border-bottom: 1.5px solid #14081c;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.order-card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 32px;
+    margin-top: 45px;
+    width: 100%;
+    max-width: 310px;
+    margin: 0 auto;
+    background-color: #faf3ff;
+    border-radius: 16px;
+}
+
+.no-orders-message {
+    margin-top: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #888;
+    text-align: center;
+}
+
+/* Statut */
+.order-status-green {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(141, 255, 200, 0.5);
+    padding: 6px 10px;
+    border-radius: 16px;
+    width: fit-content;
+}
+
+.order-status-yellow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(250, 225, 0, 0.25);
+    padding: 6px 10px;
+    border-radius: 16px;
+    width: fit-content;
+}
+
+.order-status-red {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(250, 0, 4, 0.18);
+    padding: 6px 10px;
+    border-radius: 16px;
+    width: fit-content;
+}
+
+.order-status-blue {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(141, 200, 255, 0.5);
+    padding: 6px 10px;
+    border-radius: 16px;
+    width: fit-content;
+}
+
+.order-status-green .order-dot-green {
+    width: 6px;
+    height: 6px;
+    background: #315946;
+    border-radius: 50%;
+}
+
+.order-status-yellow .order-dot-yellow {
+    width: 6px;
+    height: 6px;
+    background: #c8b400;
+    border-radius: 50%;
+}
+
+.order-status-red .order-dot-red {
+    width: 6px;
+    height: 6px;
+    background: #db0004;
+    border-radius: 50%;
+}
+
+.order-status-blue .order-dot-blue {
+    width: 6px;
+    height: 6px;
+    background: #369af7;
+    border-radius: 50%;
+}
+
+.order-status .order-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: #281d1b;
+}
+
+/* Contenu principal */
+.order-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    gap: 40px;
+}
+
+/* En-tête */
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.order-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.order-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #14081c;
+}
+
+.order-date {
+    font-size: 15px;
+    font-weight: 500;
+    color: #14081c;
+}
+
+.order-amount {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f05f4c;
+}
+
+/* Footer avec bouton */
+.order-footer {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    justify-content: center;
+    gap: 20px;
+    max-width: 100%;
+    margin-top: 50px;
+    margin: 50 auto;
+}
+
+@media (max-width: 1700px) {
+    .card-grid {
+        grid-template-columns: repeat(3, 1fr); /* desktop large */
+    }
+}
+
+@media (max-width: 1500px) {
+    .card-grid {
+        grid-template-columns: repeat(3, 1fr); /* desktop large */
+    }
+}
+
+@media (max-width: 1450px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr); /* tablette */
+    }
+}
+
+@media (max-width: 1100px) {
+    .orders-content {
+        margin-left: 0;
+        max-width: 100%;
+    }
+
+    .orders-content a {
+        margin-bottom: 70px;
+    }
+}
+
+@media (max-width: 730px) {
+    .card-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .orders-content a {
+        display: block;
+        margin-bottom: 70px;
+        text-align: center;
+    }
+
+    .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-button {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 530px) {
+    .orders-header h2 {
+        text-align: center;
+    }
+
+    .orders-header p {
+        text-align: center;
+    }
+}

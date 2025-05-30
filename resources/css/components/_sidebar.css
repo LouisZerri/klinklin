@@ -1,0 +1,104 @@
+.sidebar {
+    width: 356px;
+    min-height: 100vh;
+    background-color: var(--text-purple);
+    color: var(--text-white);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 1040;
+}
+
+
+.sidebar .nav-link {
+    color: var(--text-white) !important;
+    font-size: 16px;
+    padding: 10px 12px;
+    margin: 10px;
+}
+
+.btn-burger {
+    display: none;
+    background: var(--text-white);
+    color: black;
+    border: none;
+    top: 20px;
+    left: 20px;
+}
+
+.sidebar .nav-link:hover {
+    color: var(--text-white) !important;
+}
+
+
+.sidebar-footer {
+    color: var(--text-white) !important;
+    font-size: 15px;
+    margin: 10px;
+}
+
+
+
+/* Mobile sidebar */
+
+.mobile-sidebar {
+    background-color: var(--text-purple);
+    color: var(--text-white);
+    width: 356px;
+}
+
+.mobile-sidebar .mb-7.text-center {
+    margin-bottom: 2rem;
+}
+
+.mobile-sidebar .nav-link {
+    color: var(--text-white) !important;
+    margin: 10px;
+    font-size: 17px;
+}
+
+.mobile-sidebar .nav-link:hover {
+    background-color: var(--mint-dark);
+    color: var(--text-green) !important;
+    border-radius: 20px;
+}
+
+.mobile-sidebar .offcanvas-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mobile-sidebar .offcanvas-title {
+    color: var(--text-white);
+}
+
+.mobile-sidebar .logout-link {
+    background: none !important;
+    color: var(--text-white) !important;
+    border-radius: 0;
+    padding: 10px;
+    margin: 10px;
+    pointer-events: auto;
+}
+
+.mobile-sidebar .logout-link:hover {
+    background: none !important;
+    color: var(--text-white) !important;
+}
+
+.sidebar .nav-link:not(.logout-link).active,
+.sidebar .nav-link:not(.logout-link):hover {
+    background-color: var(--mint-dark);
+    color: var(--text-green) !important;
+    border-radius: 20px;
+    padding: 10px 12px;
+    margin: 10px;
+}
+
+.mobile-sidebar .nav-link:not(.logout-link).active,
+.mobile-sidebar .nav-link:not(.logout-link):hover {
+    background-color: var(--mint-dark);
+    color: var(--text-green) !important;
+    border-radius: 20px;
+}

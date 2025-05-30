@@ -1,0 +1,139 @@
+@extends('layouts.app')
+@section('content')
+    <div class="register-container">
+        <div class="register-left">
+            <div class="logo-hanger">
+                <img src="/images/cintre.png" alt="Logo cintre" />
+            </div>
+            <div class="testimonial-box">
+                <p>
+                    Chaque jour, de nouveaux utilisateurs nous font
+                    confiance pour leur linge. Avec KLINKLIN, ils gagnent du
+                    temps, de la sérénité… et un service qui ne laisse rien
+                    au hasard
+                </p>
+                <div class="testimonial-author">
+                    <img src="/images/ceo.png" alt="Christ Eliezer" />
+                    <div class="author-info">
+                        <strong>Christ Eliezer</strong><br />
+                        <small>CEO by KLIN KLIN</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="register-right">
+            <svg width="85" height="113" viewBox="0 0 85 113" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_7_511)">
+                    <path d="M73.2632 34.0097V33.6897L76.6101 33.4155L73.2632 34.0097Z" fill="#C10606" />
+                    <path
+                        d="M0.504333 32.2269L19.76 21.9875L40.0243 18.2391H41.6289V9.82807L44.609 9.46238L47.1305 5.39401L43.2794 2.74272L39.0615 7.17678L36.2648 6.26254L43.2336 0L48.3684 5.48544L44.9299 13.9879L47.1305 18.6505L66.7071 20.1133L85 33.7354L77.0685 35.0154L64.7357 23.8159L40.6203 23.176L25.2158 27.4729L15.2212 33.964L0.504333 32.2269Z"
+                        fill="#684289" />
+                    <path
+                        d="M3.39268 29.3928L21.548 19.0162L41.6289 15.3135L43.3711 15.2678V8.68527L46.2136 8.45671L48.5518 4.84547L44.5631 2.55987L40.8495 6.62824L37.9612 5.714L44.8841 0L49.9731 4.89118L46.6721 11.0166L48.9186 15.6792L67.4407 18.9248L85 30.2613L78.7649 31.8155L66.4779 20.8904L42.3625 20.2047L26.9579 24.5016L16.9633 31.0384L3.39268 29.3928Z"
+                        fill="#461871" />
+                    <path
+                        d="M80.3236 86.807L74.3177 92.4753L68.8161 93.1152L67.8075 89.6869L66.7071 93.2067H62.0766L62.3975 109.389L53.7783 111.309L54.3285 93.7552L50.8441 93.6638V97.8236L46.0302 106.189L41.5831 100.338L41.904 91.4239L36.6316 91.9724L36.6775 110.714L28.5626 113L28.8377 93.2981L19.8058 94.9894L18.7055 93.2524L18.2929 95.3094L1.52588e-05 98.0979L2.84252 63.4939H0.596024V39.7694L8.34414 33.7354L16.5049 35.3353L21.9606 32.6383L39.4283 34.2382L39.6575 40.4093L44.9757 35.9753L67.7616 34.1468L69.4579 37.1181L69.137 37.3924L69.1829 37.4838L73.2632 33.6897V44.752L80.0027 56.7742L75.418 62.6711L80.3236 86.807Z"
+                        fill="#684289" />
+                    <path
+                        d="M22.3274 44.9806L29.5254 57.3685L21.2729 58.8313L16.0464 51.4259L15.6796 59.2884L8.34413 59.3798L8.57337 32.4098L16.9175 33.0954L16.5507 41.0493L21.9606 32.6383L30.534 33.4154L22.3274 44.9806Z"
+                        fill="#BA9D9D" />
+                    <path
+                        d="M46.0302 48.4547L45.3884 56.2257L36.815 56.8657H36.7692L30.534 57.4142L31.13 32.9126H40.2994L38.9698 48.4547H46.0302Z"
+                        fill="#BA9D9D" />
+                    <path d="M54.3744 57.6885L46.9013 58.0085V34.1926L56.4375 33.7354L54.3744 57.6885Z" fill="#BA9D9D" />
+                    <path
+                        d="M81.6532 33.2783L80.3236 57.0485L71.0626 58.0085L66.2486 45.6205L65.6068 58.0999H57.5378L58.1338 33.0955L66.5237 32.9126L66.9822 32.6841L73.034 43.7006L73.2632 34.0097L73.3091 33.5069L81.6532 33.2783Z"
+                        fill="#BA9D9D" />
+                    <path
+                        d="M27.5539 17.9191L30.5798 17.3705L31.8635 18.1019L34.706 22.0332L35.027 36.3867L30.534 35.9753V22.3532L30.0755 20.7532L27.5539 17.9191Z"
+                        fill="#684289" />
+                    <path
+                        d="M53.0447 16.4106L55.6122 16.8677L57.2168 17.142L60.1968 20.7533L60.6095 35.6554L55.5663 35.9753L55.9331 20.8904L55.1995 19.0162L53.0447 16.4106Z"
+                        fill="#684289" />
+                    <path
+                        d="M41.7664 15.2678H43.3711L46.3053 17.7363L48.9186 15.6792L50.6607 15.9992L48.0933 20.0676L48.6893 35.9296L44.5173 36.3868L45.4342 20.3419L41.7664 15.2678Z"
+                        fill="#684289" />
+                    <path
+                        d="M22.3274 74.7848L29.5254 87.127L21.2729 88.5898L16.0464 81.2302L15.6796 89.0469L8.34413 89.1841L8.57337 62.1683L16.9175 62.854L16.5507 70.8535L21.9606 62.4425L30.534 63.1739L22.3274 74.7848Z"
+                        fill="#8DFFC8" />
+                    <path
+                        d="M46.0302 78.2132L45.3884 86.0299L36.815 86.6242H36.7692L30.534 87.1727L31.13 62.6711H40.2994L38.9698 78.2132H46.0302Z"
+                        fill="#8DFFC8" />
+                    <path d="M54.3744 87.447L46.9013 87.767V63.951L56.4375 63.4939L54.3744 87.447Z" fill="#8DFFC8" />
+                    <path
+                        d="M81.6532 63.0368L80.3236 86.807L71.0626 87.767L66.2486 75.379L65.6068 87.8584H57.5378L58.1338 62.7168H66.5237H67.028L73.034 73.4591L73.3091 63.2654L81.6532 63.0368Z"
+                        fill="#8DFFC8" />
+                    <path
+                        d="M22.3274 44.9806L29.5254 57.3685L21.2729 58.8313L16.0464 51.4259L15.6796 59.2884L8.34413 59.3798L8.57337 32.4098L16.9175 33.0954L16.5507 41.0493L21.9606 32.6383L30.534 33.4154L22.3274 44.9806Z"
+                        fill="#8DFFC8" />
+                    <path
+                        d="M46.0302 48.4547L45.3884 56.2257L36.815 56.8657H36.7692L30.534 57.4142L31.13 32.9126H40.2994L38.9698 48.4547H46.0302Z"
+                        fill="#8DFFC8" />
+                    <path d="M54.3744 57.6885L46.9013 58.0085V34.1926L56.4375 33.7354L54.3744 57.6885Z" fill="#8DFFC8" />
+                    <path
+                        d="M81.6532 33.2783L80.3236 57.0485L71.0626 58.0085L66.2486 45.6205L65.6068 58.0999H57.5378L58.1338 32.9126H66.5237H67.028L73.034 43.7006L73.3091 33.5069L81.6532 33.2783Z"
+                        fill="#8DFFC8" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_7_511">
+                        <rect width="85" height="113" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+            <h1>Créer un compte</h1>
+            <p>
+                Déjà utilisateur de KLINKLIN ?
+                <a href="{{ route('login') }}">Connectez-vous ici</a>
+            </p>
+            <form class="register-form" method="POST" action="{{ route('post_register') }}">
+                @csrf
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prenom">Prénom <span>*</span></label>
+                        <div class="input-icon">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" id="prenom" name="firstname" placeholder="Dupont" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nom">Nom <span>*</span></label>
+                        <div class="input-icon">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" id="nom" name="lastname" placeholder="Henri" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <div class="input-icon">
+                            <i class="fa-solid fa-phone"></i>
+                            <input id="phone" type="tel" name="phone" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-icon">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" id="email" name="email" placeholder="email@example.com" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group full-width password">
+                    <label for="password">Mot de passe</label>
+                    <div class="input-icon">
+                        <i class="fa-regular fa-eye-slash"></i>
+                        <input type="password" id="password" name="password" placeholder="Mot de passe" required />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-purple">
+                    Créer mon compte
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="chat-widget">
+        <img src="/images/chat.png" alt="Chat" />
+    </div>
+@endsection

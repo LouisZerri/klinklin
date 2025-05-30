@@ -1,0 +1,11 @@
+.payment-content {
+    margin-left: 356px;
+    padding: 2rem;
+    max-width: calc(100% - 356px);
+    box-sizing: border-box;
+}
+
+.payment-header h2 {
+    font-weight: 700;
+    font-size: 48px;
+}

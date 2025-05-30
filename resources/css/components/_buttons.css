@@ -1,0 +1,247 @@
+/* ====== BOUTON HERO ET NAVBAR ====== */
+
+.btn-purple {
+    background-color: var(--violet-normal);
+    color: var(--text-white);
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    border: none;
+    border-radius: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    min-height: 48px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-purple:hover {
+    background-color: var(--violet-normal-hover);
+    color: var(--text-white);
+}
+
+.btn-mint {
+    background-color: var(--mint-normal);
+    color: var(--text-green);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.2;
+    padding: 16px 24px;
+    border: none;
+    border-radius: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    white-space: nowrap;
+    min-height: 62px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-mint:hover {
+    background-color: var(--mint-dark);
+    color: var(--text-green);
+}
+
+/* BOUTON SECTION AVANT FOOTER */
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cta-buttons .btn {
+    padding: 16px 24px;
+    border-radius: 40px;
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btn-collecte {
+    background: var(--mint-dark);
+    color: var(--text-purple);
+    border: none;
+}
+
+.btn-collecte:hover {
+    background: var(--mint-dark-hover);
+    color: var(--violet-normal-hover);
+}
+
+/* BOUTON DASHBOARD */
+
+.btn-purple-dashboard {
+    background-color: var(--violet-normal);
+    color: var(--text-white);
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    border: none;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    min-height: 48px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-purple-dashboard:hover {
+    background-color: var(--violet-normal-hover);
+    color: var(--text-white);
+}
+
+.btn-green {
+    background: var(--mint-dark);
+    color: var(--text-purple);
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    border: none;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    min-height: 48px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-green:hover {
+    background: var(--mint-dark-hover);
+    color: var(--violet-normal-hover);
+}
+
+.btn-yellow {
+    background-color: var(--yellow-normal);
+    color: var(--text-purple);
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    border: none;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    min-height: 48px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-yellow:hover {
+    background-color: var(--yellow-normal-hover);
+}
+
+.btn-red {
+    background-color: var(--red-normal);
+    color: var(--text-white);
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    border: none;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    min-height: 48px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-red:hover {
+    background-color: var(--red-normal-hover);
+    color: var(--text-white);
+}
+
+.reset-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 1rem;
+    background-color: #e3dcea;
+    color: rgba(20, 8, 28, 0.5);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.reset-btn:hover {
+    background-color: #d2c2ea;
+}
+
+.edit-button {
+    padding: 10px 32px;
+    height: 56px;
+    background-color: #c6b7d3;
+    border: none;
+    border-radius: 16px;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--text-black);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.edit-button:hover {
+    background-color: #b782e5;
+}
+
+.filter-button {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px 8px 18px;
+    gap: 8px;
+    background: #ffffff;
+    height: 51px;
+    border: 1.5px solid rgba(73, 101, 110, 0.2);
+    border-radius: 16px;
+    position: relative;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    color: #14081c;
+    cursor: pointer;
+}
+
+.filter-button-active {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 12px 8px 18px;
+    gap: 8px;
+    background: #dcffee;
+    border: 1.5px solid rgba(73, 101, 110, 0.2);
+    border-radius: 16px;
+    position: relative;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    color: #14081c;
+    cursor: pointer;
+}
+
+.order-details-button {
+  background: #461871;
+  color: #FFFBFA;
+  border: none;
+  border-radius: 16px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}

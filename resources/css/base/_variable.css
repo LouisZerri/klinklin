@@ -1,0 +1,53 @@
+:root {
+    /* var(--text-white) */
+    --text-white: #ffffff;
+    --text-white-smooth: #e0e0e0;
+
+    /* BLACK */
+    --text-black: #14081c;
+    --text-black-primary: #000000;
+
+    /* GRAY */
+    --gray-lighter: #DAD8D8;
+    --gray-light: #d5d4d4;
+    --gray-smooth: #C8C5C5;
+    --gray-normal: #a9a9a9;
+    --gray-subtitle: #9a9a9a;
+    --gray-dark: #727272;
+    --gray-darker: #555555;
+    --gray-darkness: #2D2D2D;
+
+    /* VIOLET */
+    --violet-footer: #190828;
+    --violet-smooth: #c6b7d3;
+    --violet-dark: #1f0b33;
+    --violet-normal: #461871;
+    --violet-normal-hover: #3F1666;
+    --text-purple: #2a0e44;
+    --text-purple-dark: #1F0B33;
+
+    /* VERT */
+    --mint-normal: #dcffee;
+    --mint-dark: #8dffc8;
+    --mint-smooth: #6ABF96;
+    --mint-dark-hover: #7FE6B4;
+    --text-green: #3f735a;
+    --text-green-dark: #02303E;
+
+
+    /* YELLOW */
+    --yellow-normal: #FAE100;
+    --yellow-normal-hover: #fbf13a;
+
+    /* ORANGE */
+    --orange-normal: #F05F4C;
+
+    /* RED */
+    --red-normal: #ff5c5c;
+    --red-normal-hover: #ff1e1e;
+    --red-primary: #ff0000;
+    
+    
+    
+    
+}

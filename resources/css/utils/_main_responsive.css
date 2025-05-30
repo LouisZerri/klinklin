@@ -1,0 +1,605 @@
+/* Desktop large (≤ 1430px) */
+@media (max-width: 1430px) {
+    .blog-card {
+        width: 100%;
+        height: auto;
+    }
+
+    .blog-img {
+        height: 220px;
+        border-radius: 20px;
+    }
+
+    .blog-card-body {
+        position: relative;
+        top: -30px;
+        left: 0;
+        width: calc(100% - 32px);
+        margin: 0 auto;
+        padding: 16px;
+        gap: 12px;
+        border-radius: 16px;
+        background: var(--text-white);
+        border: 1px solid #14081c;
+    }
+
+}
+
+@media (max-width: 1400px) {
+
+    .icon-deco-violet {
+        position: absolute;
+        left: 15rem;
+    }
+
+    
+    .icon-cleaning {
+        position: absolute;
+        left: 23rem;
+    }
+    
+    .icon-drop {
+        position: absolute;
+        top: 13rem;
+        left: 23rem;
+    }
+    
+    .badge-special {
+        position: absolute;
+        left: -2rem;
+    }
+}
+
+
+
+
+/* Desktop moyen (≤ 1300px) */
+@media (max-width: 1300px) {
+    .testimonial-controls button,
+    .blog-controls button {
+        border-radius: 30px;
+        border: 1px solid #2a0e44;
+        padding: 10px 20px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--text-white);
+        color: #2a0e44;
+        transition: all 0.3s ease;
+    }
+
+    .testimonial-controls .arrow-prev::before,
+    .blog-controls .arrow-prev::before {
+        font-size: 14px;
+    }
+
+    .testimonial-controls .arrow-next::before,
+    .blog-controls .arrow-next::before {
+        font-size: 14px;
+    }
+
+    .testimonial-dots,
+    .blog-dots {
+        justify-content: center;
+        margin: 1rem 0;
+    }
+
+    .testimonial-controls,
+    .blog-controls {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        padding: 0 1rem;
+    }
+}
+
+/* Réorganisation verticale (≤ 1200px) */
+@media (max-width: 1200px) {
+    .navbar-custom {
+        height: 80px;
+        padding: 0 40px;
+    }
+
+    .navbar-brand svg {
+        height: 60px;
+    }
+
+    .navbar-nav {
+        gap: 10px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+
+    .cta-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .cta-text {
+        order: 1;
+        width: 100%;
+    }
+
+    .cta-image {
+        order: 2;
+        width: 100%;
+        margin-top: 24px;
+    }
+
+    .cta-buttons {
+        justify-content: center;
+    }
+
+    .icon-deco-violet {
+        position: absolute;
+        left: 15rem;
+    }
+    
+}
+
+/* Section Héro : réorganisation verticale (≤ 1030px) */
+@media (max-width: 1030px) {
+    .hero-section .row {
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-section .col-lg-6 {
+        width: 100%;
+    }
+
+    .hero-title {
+        font-size: 60px !important;
+        text-align: left;
+
+    }
+
+    .hero-image-box img {
+        max-width: 320px;
+        height: auto;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .icon-deco-violet {
+        position: absolute;
+        left: 15rem;
+        top: 10rem;
+    }
+
+    .icon-cleaning {
+        position: absolute;
+        left: 20rem;
+        top: 16rem;
+    }
+
+    .icon-drop {
+        position: absolute;
+        top: 10rem;
+        left: 23rem;
+    }
+
+    .badge-special {
+        position: absolute;
+        top: 10rem;
+        left: 18rem;
+    }
+}
+
+/* Tablette (≤ 991px) */
+@media (max-width: 991px) {
+    .navbar-custom {
+        padding: 0 40px;
+        height: auto;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .navbar .container {
+        flex-direction: row !important;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar-brand {
+        margin-bottom: 0;
+    }
+
+    .hero-section .col-lg-6:first-child {
+        order: 1;
+    }
+
+    .hero-section .col-lg-6:last-child {
+        order: 1;
+    }
+
+    .hero-title {
+        font-size: 60px !important;
+        text-align: left;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+    }
+
+    .hero-section {
+        padding: 2rem 1rem;
+    }
+
+    .scroll-content {
+        animation-duration: 30s;
+    }
+
+    .steps-list {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .step,
+    .step.wide {
+        max-width: 100%;
+    }
+
+    .section-title {
+        font-size: 36px;
+    }
+
+    .section-desc {
+        font-size: 15px;
+    }
+
+    .btn-burger {
+        position: relative;
+        z-index: auto;
+    }
+
+    .badge-special {
+        position: absolute;
+        top: 10rem;
+        left: 10rem;
+    }
+
+    .faq-section {
+        padding: 0 25px;
+    }
+}
+
+/* Smartphone (≤ 767px) */
+@media (max-width: 767px) {
+    .navbar-custom {
+        padding: 16px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .hero-title {
+        font-size: 36px;
+        line-height: 1.3;
+    }
+
+    .hero-subtitle {
+        font-size: 16px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        font-size: 16px;
+        height: 56px;
+    }
+
+    .scroll-banner {
+        height: 60px;
+    }
+
+    .scroll-item {
+        font-size: 16px;
+    }
+
+    .btn-purple {
+        font-size: 14px;
+        padding: 10px 20px;
+        min-height: 44px;
+        color: var(--text-white);
+    }
+
+    .btn-mint {
+        font-size: 16px;
+        padding: 12px 20px;
+        min-height: 56px;
+    }
+
+    .section-title {
+        font-size: 36px;
+    }
+
+    .cards-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .badge-special {
+        position: absolute;
+        top: 10rem;
+        left: 4rem;
+    }
+}
+
+/* Tablette (768px - 1024px) */
+@media (max-width: 1024px) {
+    .register-container {
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .register-left {
+        width: 35%; /* Rétréci légèrement */
+    }
+
+    .register-right {
+        width: 65%;
+        padding: 3rem 2rem;
+    }
+
+    .logo-hanger {
+        width: 200px; /* Plus petit */
+        height: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 150px;
+    }
+
+    .testimonial-box {
+        width: 85%;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 330px;
+        height: auto;
+    }
+
+    .register-right h1 {
+        font-size: 36px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .chat-widget {
+        bottom: 30px;
+        right: 30px;
+    }
+}
+
+/* Tablette portrait (jusqu'à 820px) */
+@media (max-width: 820px) {
+    .register-left {
+        width: 30%; /* Encore plus petit */
+    }
+
+    .register-right {
+        width: 70%;
+    }
+
+    .logo-hanger {
+        width: 150px;
+        top: 120px;
+    }
+
+    .testimonial-box {
+        width: 90%;
+        padding: 20px;
+        font-size: 14px;
+        top: 280px;
+    }
+
+    .testimonial-author {
+        height: auto;
+    }
+}
+
+/* Mobile (jusqu'à 767px) */
+@media (max-width: 767px) {
+    .register-container {
+        flex-direction: column;
+    }
+
+    .register-left {
+        width: 100%;
+        padding: 2rem 1rem;
+        order: 2; /* Change l'ordre pour mettre le formulaire en premier */
+        min-height: 350px;
+    }
+
+    .register-right {
+        width: 100%;
+        padding: 2rem 1.5rem;
+        order: 1; /* Met le formulaire en premier */
+    }
+
+    .logo-hanger {
+        position: relative;
+        width: 180px;
+        top: 0;
+        left: auto;
+        transform: none;
+        margin-bottom: 1.5rem;
+    }
+
+    .testimonial-box {
+        position: relative;
+        width: 100%;
+        left: auto;
+        top: auto;
+        transform: none;
+        margin-top: 2rem;
+    }
+
+    .register-right h1 {
+        font-size: 28px;
+    }
+
+    .register-right p {
+        font-size: 14px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .input-icon input {
+        padding: 10px 16px 10px 40px;
+        font-size: 14px;
+    }
+
+    .btn-purple {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    .chat-widget {
+        width: 42px;
+        height: 42px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .testimonial-author {
+        gap: 12px;
+    }
+
+    .author-info strong {
+        font-size: 14px;
+    }
+
+    .author-info small {
+        font-size: 12px;
+    }
+
+    .badge-special {
+        position: absolute;
+        top: 10rem;
+        left: 1rem;
+    }
+}
+
+@media (max-width: 630px){
+    .section-steps, .blog-section {
+        padding: 0 25px;
+    }
+}
+
+
+
+/* Petits écrans mobiles (jusqu'à 480px) */
+@media (max-width: 480px) {
+    .register-left {
+        min-height: 280px;
+    }
+
+    .logo-hanger {
+        width: 120px;
+    }
+
+    .testimonial-box {
+        padding: 15px;
+        margin-top: 1rem;
+        font-size: 13px;
+    }
+
+    .testimonial-author img {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* Très petits écrans mobiles (jusqu'à 375px) */
+@media (max-width: 375px) {
+    .register-right {
+        padding: 1.5rem 1rem;
+    }
+
+    .register-right h1 {
+        font-size: 24px;
+    }
+
+    .testimonial-box {
+        padding: 15px;
+    }
+
+    .register-left {
+        min-height: 220px; /* Réduire encore plus */
+    }
+}
+
+/* Écrans très étroits (jusqu'à 320px) */
+@media (max-width: 320px) {
+    .register-left {
+        display: none; /* Supprime complètement le bandeau violet */
+    }
+
+    .register-right {
+        width: 100%;
+        padding: 1.5rem 0.8rem;
+    }
+
+    .register-right h1 {
+        font-size: 22px;
+    }
+
+    .input-icon input {
+        padding: 8px 12px 8px 36px;
+    }
+}
+
+/* Fix pour l'intégration de intl-tel-input en responsive */
+@media (max-width: 767px) {
+    .iti input {
+        font-size: 14px;
+    }
+
+    .input-icon .iti__selected-flag {
+        padding-left: 42px;
+    }
+}
+
+/* Ajustements supplémentaires pour petits écrans */
+@media (max-width: 320px) {
+    .iti input {
+        font-size: 13px;
+        padding-left: 50px;
+    }
+
+    .input-icon .iti__selected-flag {
+        padding-left: 35px;
+    }
+
+    .form-group {
+        gap: 4px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    .btn-purple {
+        padding: 10px 16px;
+    }
+}

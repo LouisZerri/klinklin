@@ -1,0 +1,32 @@
+body {
+    font-family: "Montserrat", sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.bg-light-purple {
+    background-color: #EDE8F1BF;
+}
+.bg-light-green {
+    background-color: #EEFFF7;
+}
+.bg-light-yellow {
+    background-color: #FFFCE6;
+}
+.bg-light-red {
+    background-color: #FEEFED;
+}
+
+.text-purple {
+    color: #461871;
+}
+.text-green {
+    color: #3f735a;
+}
+.text-yellow {
+    color: #ffdd00;
+}
