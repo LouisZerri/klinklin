@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('reference')->unique();
             $table->date('invoice_date');
             $table->decimal('total', 10, 2);
+            $table->string('pdf_path')->nullable();
             $table->timestamps();
         });
     }

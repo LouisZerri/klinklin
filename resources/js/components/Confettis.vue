@@ -67,8 +67,8 @@
                 <a href="/commandes">Cliquez-ici</a>
             </p>
             <p class="instructions">
-                Nous avons bien reçu votre commande<br />
-                Vous pouvez suivre son état dans votre tableau de bord
+                Nous vous avons envoyé un e-mail de confirmation<br />
+                Vous pouvez suivre l'état de votre commande dans votre tableau de bord
             </p>
         </div>
     </div>
