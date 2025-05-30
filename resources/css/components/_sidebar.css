@@ -1,16 +1,39 @@
 .sidebar {
-    width: 356px;
-    min-height: 100vh;
-    background-color: var(--text-purple);
-    color: var(--text-white);
-    padding: 2rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: fixed;
-    z-index: 1040;
+  width: 356px;
+  height: 100vh;
+  background-color: var(--text-purple);
+  color: var(--text-white);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 1040;
+  overflow: hidden;
 }
 
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.sidebar-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.sidebar-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
 
 .sidebar .nav-link {
     color: var(--text-white) !important;
