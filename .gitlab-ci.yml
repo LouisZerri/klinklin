@@ -1,0 +1,119 @@
+# Image Docker avec PHP et Node.js
+image: edbizarro/gitlab-ci-pipeline-php:8.2-alpine
+
+# Définition des étapes
+stages:
+  - build
+  - test
+  - deploy
+
+# Variables globales
+variables:
+  NODE_VERSION: "18"
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_DATABASE: klinklin
+  MYSQL_USER: klinklin_user
+  MYSQL_PASSWORD: klinklin
+  DB_HOST: mysql
+
+# Cache pour optimiser les builds
+cache:
+  paths:
+    - vendor/
+    - node_modules/
+    - public/build/
+
+# Build de l'application
+build_app:
+  stage: build
+  script:
+    # Dépendances PHP
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - cp .env.example .env
+    - php artisan key:generate
+
+    # Dépendances JavaScript
+    - npm ci --prefer-offline --no-audit
+
+    # Build des assets avec Vite
+    - npm run build
+
+  artifacts:
+    paths:
+      - vendor/
+      - node_modules/
+      - public/build/
+      - .env
+    expire_in: 4 hours
+
+# Tests Laravel (optionnel)
+test_app:
+  stage: test
+  services:
+    - mysql:8.0
+  script:
+    - php artisan migrate --env=testing
+    - php artisan test
+  dependencies:
+    - build_app
+
+# Déploiement sur EC2 avec Apache
+deploy_to_ec2:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    # Installation des outils
+    - apk add --no-cache openssh-client rsync
+
+    # Configuration SSH
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $EC2_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+
+  script:
+    - echo "🚀 Déploiement vers EC2 avec Apache..."
+
+    # Synchronisation des fichiers
+    - rsync -avz --delete
+      --exclude='.git'
+      --exclude='node_modules'
+      --exclude='.env'
+      --exclude='storage/logs/*'
+      --exclude='storage/framework/cache/*'
+      --exclude='storage/framework/sessions/*'
+      --exclude='storage/framework/views/*'
+      --exclude='bootstrap/cache/*'
+      ./ $EC2_USER@$EC2_HOST:$EC2_PATH/
+
+    # Commandes sur le serveur EC2
+    - ssh $EC2_USER@$EC2_HOST "
+      cd $EC2_PATH &&
+      echo '📦 Installation des dépendances...' &&
+      composer install --no-dev --optimize-autoloader --no-interaction &&
+      echo '🔧 Optimisation Laravel...' &&
+      php artisan config:cache &&
+      php artisan route:cache &&
+      php artisan view:cache &&
+      echo '🗃️  Migration base de données...' &&
+      php artisan migrate --force &&
+      echo '🔐 Configuration des permissions...' &&
+      sudo chown -R www-data:www-data storage bootstrap/cache &&
+      sudo chmod -R 775 storage bootstrap/cache &&
+      echo '🔄 Redémarrage Apache...' &&
+      sudo systemctl reload apache2 &&
+      echo '✅ Déploiement terminé avec succès !'
+      "
+
+  only:
+    - main
+  when: manual # Déploiement manuel pour plus de sécurité
+
+  environment:
+    name: production
+    url: http://$EC2_HOST
+
+  dependencies:
+    - build_app
