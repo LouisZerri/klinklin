@@ -9,6 +9,7 @@ import BookingSelector from './components/BookingSelector.vue';
 import StripeCheckout from './components/StripeCheckout.vue';
 import Confettis from './components/Confettis.vue';
 import Order from './components/Order.vue';
+import Invoice from './components/Invoice.vue';
 
 
 // INTEGRATION DE VUEJS 
@@ -22,6 +23,7 @@ app.component('BookingSelector', BookingSelector)
 app.component('StripeCheckout', StripeCheckout)
 app.component('Confettis', Confettis);
 app.component('Order', Order);
+app.component('Invoice', Invoice);
 
 
 app.mount('#app')

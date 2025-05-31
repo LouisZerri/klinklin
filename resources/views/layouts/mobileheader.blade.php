@@ -72,6 +72,12 @@
                 <i class="fa-solid fa-store"></i>
             </div>
         </div>
+    @elseif (Str::contains(Route::currentRouteName(), ['invoices']))
+        <div class="logo-mobile">
+            <div class="icon-circle">
+                <i class="fa-solid fa-file-invoice"></i>
+            </div>
+        </div>
     @endif
     <button class="btn-burger-custom" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar"
         aria-controls="mobileSidebar">

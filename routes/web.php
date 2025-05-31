@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\StripeCheckoutController;
@@ -52,10 +53,21 @@ Route::post("/collecte/paiement", [StripeCheckoutController::class, 'paymentInte
 Route::get('/thankyou', [StripeCheckoutController::class, 'thankYou'])->middleware(['auth', 'verified'])->name('checkout.thankyou');
 
 /* ====================== LES COMMANDES ====================== */
+
 Route::get("/commandes", [OrderController::class, 'index'])->middleware(['auth', 'verified'])->name('orders.index');
 
+/* ====================== LES FACTURES ====================== */
 
+Route::get("/factures", [InvoiceController::class, 'index'])->middleware(['auth', 'verified'])->name('invoices.index');
 
+/* Télécharger une facture */
+Route::get('/factures/{id}/download', [InvoiceController::class, 'download'])->middleware(['auth', 'verified'])->name('invoices.download');
+
+/* Visualiser une facture */
+Route::get('/factures/{id}/view', [InvoiceController::class, 'view'])->middleware(['auth', 'verified'])->name('invoices.view');
+
+/* Vérifier la disponibilité d'une facture */
+Route::get('/factures/{id}/check', [InvoiceController::class, 'checkAvailability'])->middleware(['auth', 'verified'])->name('invoices.check');
 
 
 

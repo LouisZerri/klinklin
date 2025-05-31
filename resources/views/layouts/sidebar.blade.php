@@ -67,7 +67,7 @@
         <!-- Menu -->
         <ul class="nav flex-column">
             <li class="nav-item mb-3">
-                <a class="nav-link {{ Route::is('dashboard', 'orders.index') ? 'active' : '' }}" href="{{ route('dashboard') }}"><i class="fas fa-home me-2"></i>Accueil</a>
+                <a class="nav-link {{ Route::is('dashboard', 'orders.index', 'invoices.index') ? 'active' : '' }}" href="{{ route('dashboard') }}"><i class="fas fa-home me-2"></i>Accueil</a>
             </li>
             <li class="nav-item mb-3">
                 <a class="nav-link text-white" href="#"><i class="fas fa-user me-2"></i>Profil</a>
