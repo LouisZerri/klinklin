@@ -105,6 +105,16 @@
     color: #e05757;
 }
 
+.history-badge-yellow {
+    background-color: #fff3cd;
+    color: #9a7400;
+}
+
+.history-badge-blue {
+    background-color: #e0ecff;
+    color: #2b6cb0;
+}
+
 .history-badge-neutral {
     background-color: var(--gray-lighter);
     color: var(--gray-darker);

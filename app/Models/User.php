@@ -20,6 +20,7 @@ class User extends Authenticatable
         'phone',
         'email',
         'password',
+        'avatar',
         'image_profil',
         'language',
         'reset_token',

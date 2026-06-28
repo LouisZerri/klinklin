@@ -103,6 +103,13 @@ function badgeClass(status) {
             return 'history-badge-green'
         case 'Annulée':
             return 'history-badge-red'
+        case 'En attente':
+            return 'history-badge-yellow'
+        case 'Prévu':
+        case 'Collecté':
+        case 'En nettoyage':
+        case 'Sortir pour livraison':
+            return 'history-badge-blue'
         default:
             return 'history-badge-neutral'
     }

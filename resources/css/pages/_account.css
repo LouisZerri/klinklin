@@ -134,6 +134,41 @@
     border: 2px solid var(--mint-dark);
 }
 
+.account-avatar-wrapper {
+    position: relative;
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+}
+
+.account-avatar-edit {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--violet-normal);
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.account-avatar-edit:hover {
+    background-color: var(--violet-normal-hover);
+}
+
+.account-avatar-hint {
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: var(--gray-normal);
+}
+
 .account-profile-name {
     font-weight: 700;
     font-size: 1.1rem;

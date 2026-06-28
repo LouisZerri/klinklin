@@ -105,7 +105,7 @@
             </div>
         @endif
         <div class="buttons-container">
-            @if ($order->status === 'En attente')
+            @if ($order->status === 'Prévu')
                 <form action="{{ route('order.cancel', $order->id) }}" method="POST"
                     onsubmit="return confirm('Êtes-vous sûr de vouloir annuler cette commande ?')">
                     @csrf

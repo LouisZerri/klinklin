@@ -42,6 +42,11 @@ class StripeCheckoutController extends Controller
             'automatic_payment_methods' => ['enabled' => true],
         ]);
 
+        // On conserve l'identifiant du PaymentIntent pour un éventuel remboursement.
+        if ($total['order']) {
+            $total['order']->update(['payment_intent_id' => $paymentIntent->id]);
+        }
+
         return response()->json([
             'clientSecret' => $paymentIntent->client_secret
         ]);
@@ -85,7 +90,10 @@ class StripeCheckoutController extends Controller
 
         // Génère la facture PDF et l'enregistre
         $this->generateInvoice($paidOrder);
-        
+
+        // La commande est payée : on planifie la collecte
+        $paidOrder->update(['status' => 'Prévu']);
+
         // Nettoie la session
         $request->session()->forget('order_id');
         
@@ -144,7 +152,7 @@ class StripeCheckoutController extends Controller
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-        if ($order->status !== 'En attente') {
+        if ($order->status !== 'Prévu') {
             return redirect()->route('dashboard')->with('error', 'La commande ne peut pas être remboursée');
         }
 

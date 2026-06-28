@@ -98,6 +98,7 @@ function getStatusClass(status) {
         case 'en attente':
             return 'order-status-yellow'
         case 'livré':
+        case 'terminée':
             return 'order-status-green'
         case 'annulée':
             return 'order-status-red'
@@ -111,6 +112,7 @@ function getDotClass(status) {
         case 'en attente':
             return 'order-dot-yellow'
         case 'livré':
+        case 'terminée':
             return 'order-dot-green'
         case 'annulée':
             return 'order-dot-red'

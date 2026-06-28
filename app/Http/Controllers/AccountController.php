@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subscription;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,7 @@ class AccountController extends Controller
      */
     public function updateProfile(Request $request)
     {
+        /** @var User $user */
         $user = Auth::user();
 
         $validated = $request->validate([
@@ -33,12 +35,40 @@ class AccountController extends Controller
             'phone' => ['required', 'regex:/^\+?[0-9\s\-\(\)]+$/', 'min:7', 'max:20'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
             'language' => ['required', 'string', 'max:50'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:8192'],
         ], [
             'lastname.min' => 'Le nom doit faire plus de 2 caractères',
             'firstname.min' => 'Le prénom doit faire plus de 2 caractères',
             'phone.regex' => 'Le numéro de téléphone doit être valide',
             'email.unique' => 'Cette adresse email est déjà utilisée',
+            'avatar.image' => 'Le fichier doit être une image',
+            'avatar.mimes' => 'Formats acceptés : jpeg, png, jpg, gif, webp',
+            'avatar.max' => 'L\'image ne peut pas dépasser 8 Mo',
         ]);
+
+        // Upload de la photo de profil
+        if ($request->hasFile('avatar')) {
+            // Supprimer l'ancienne photo personnalisée
+            if ($user->avatar && str_starts_with($user->avatar, '/images/utilisateurs/')) {
+                $oldPath = public_path(ltrim($user->avatar, '/'));
+                if (is_file($oldPath)) {
+                    @unlink($oldPath);
+                }
+            }
+
+            $file = $request->file('avatar');
+            $filename = 'user_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $destination = public_path('images/utilisateurs');
+
+            if (! is_dir($destination)) {
+                mkdir($destination, 0755, true);
+            }
+
+            $file->move($destination, $filename);
+            $validated['avatar'] = '/images/utilisateurs/' . $filename;
+        } else {
+            unset($validated['avatar']);
+        }
 
         $user->update($validated);
 
@@ -84,7 +114,9 @@ class AccountController extends Controller
             $data[$field] = $request->boolean($field);
         }
 
-        Auth::user()->update($data);
+        /** @var User $user */
+        $user = Auth::user();
+        $user->update($data);
 
         return back()->with('success', 'Vos préférences de notification ont été enregistrées.');
     }
@@ -121,7 +153,9 @@ class AccountController extends Controller
             'password.regex' => 'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial',
         ]);
 
-        Auth::user()->update([
+        /** @var User $user */
+        $user = Auth::user();
+        $user->update([
             'password' => Hash::make($request->password),
         ]);
 

@@ -15,15 +15,18 @@ class DashboardController extends Controller
 
         $user = Auth::user();
 
-        // Annuler l'ancienne commande non finalisée (on conserve ses articles)
+        // Supprimer l'ancienne commande non finalisée (jamais payée) plutôt
+        // que de la laisser en "Annulée" et polluer l'historique.
         if (session()->has('order_id')) {
 
-            $orderId = session('order_id');
+            $order = Order::find(session('order_id'));
 
-            // On passe la commande à annulée (sans supprimer ses articles)
-            Order::where('id', $orderId)->update(['status' => 'Annulée']);
+            // On ne supprime qu'une commande non payée (statut En attente).
+            // Les commandes payées puis remboursées restent en "Annulée".
+            if ($order && $order->status === 'En attente') {
+                $order->delete(); // supprime aussi les order_items (cascade)
+            }
 
-            // Supprimer la session
             $request->session()->forget('order_id');
         }
 

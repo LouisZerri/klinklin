@@ -128,6 +128,18 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Aperçu de la photo de profil avant envoi
+    const avatarInput = document.querySelector("#avatar");
+    const avatarPreview = document.querySelector("#avatar-preview");
+    if (avatarInput && avatarPreview) {
+        avatarInput.addEventListener("change", () => {
+            const file = avatarInput.files[0];
+            if (file) {
+                avatarPreview.src = URL.createObjectURL(file);
+            }
+        });
+    }
+
     // Affichage / masquage du mot de passe (icône œil)
     document.querySelectorAll(".input-icon").forEach((wrapper) => {
         const icon = wrapper.querySelector("i.fa-eye-slash, i.fa-eye");

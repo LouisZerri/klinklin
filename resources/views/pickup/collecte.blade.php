@@ -24,7 +24,7 @@
             <div class="form-grid">
                 <div class="field">
                     <label for="adresse">Adresse</label>
-                    <input type="text" id="adresse" name="address" placeholder="95 Rue Pointe Noire, Congo" required />
+                    <input type="text" id="adresse" name="address" placeholder="Ex : 12 rue de la République" required />
                 </div>
                 <div class="field">
                     <label for="complement">Complément d’adresse</label>
@@ -33,11 +33,11 @@
     
                 <div class="field">
                     <label for="ville">Ville</label>
-                    <input type="text" id="ville" name="city" placeholder="Brazzaville" required />
+                    <input type="text" id="ville" name="city" placeholder="Ex : Paris" required />
                 </div>
                 <div class="field">
                     <label for="postal">Code postal</label>
-                    <input type="text" id="postal" name="zip_code" placeholder="7500" required />
+                    <input type="text" id="postal" name="zip_code" placeholder="Ex : 75001" required />
                 </div>
     
                 <div class="field">

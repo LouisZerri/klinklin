@@ -448,3 +448,19 @@
         height: 100px;
     }
 }
+
+/* Photo de profil du tableau de bord (avatar circulaire, toute image) */
+.connection-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--mint-dark);
+}
+
+@media (max-width: 768px) {
+    .connection-image {
+        width: 90px;
+        height: 90px;
+    }
+}

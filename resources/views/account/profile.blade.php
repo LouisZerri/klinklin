@@ -8,17 +8,25 @@
     <div class="account-layout">
         <div class="account-main">
             <div class="account-card">
-                <div class="account-profile-head">
-                    <img src="{{ $user->avatar }}" alt="Avatar" class="account-avatar" />
-                    <div>
-                        <div class="account-profile-name">{{ $user->firstname }} {{ $user->lastname }}</div>
-                        <div class="account-profile-email">{{ $user->email }}</div>
-                    </div>
-                </div>
-
-                <form action="{{ route('account.profile.update') }}" method="POST" class="account-form">
+                <form action="{{ route('account.profile.update') }}" method="POST" class="account-form"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+
+                    <div class="account-profile-head">
+                        <div class="account-avatar-wrapper">
+                            <img src="{{ $user->avatar }}" alt="Avatar" class="account-avatar" id="avatar-preview" />
+                            <label for="avatar" class="account-avatar-edit" title="Changer la photo">
+                                <i class="fa-solid fa-camera"></i>
+                            </label>
+                            <input type="file" id="avatar" name="avatar" accept="image/*" hidden />
+                        </div>
+                        <div>
+                            <div class="account-profile-name">{{ $user->firstname }} {{ $user->lastname }}</div>
+                            <div class="account-profile-email">{{ $user->email }}</div>
+                            <div class="account-avatar-hint">JPG, PNG, GIF ou WEBP — 8 Mo max.</div>
+                        </div>
+                    </div>
 
                     <div class="account-grid">
                         <div class="account-field">
