@@ -21,17 +21,19 @@
                         <div class="order-title">Commande {{ order.order_number }}</div>
                         <div class="order-date">Date: {{ formatDate(order.order_date) }}</div>
                     </div>
-                    <div class="order-amount">{{ formatTotal(order) }}</div>
+                    <div class="order-amount">
+                        {{ formatTotal(order) }}
+                    </div>
                 </div>
 
                 <div class="order-footer">
-                    <button class="order-details-button">Voir détails</button>
+                    <a :href="`/commandes/${order.id}`" class="order-details-button">Voir détails</a>
                 </div>
             </div>
         </div>
     </div>
     <div v-else class="no-orders-message">
-        Aucune commande à afficher pour ce statut.
+        Aucune commande à afficher
     </div>
 
     <a href="/collecte" class="btn btn-purple-dashboard mt-5">
@@ -77,13 +79,19 @@ function formatTotal(order) {
     const subtotal = parseFloat(order.subtotal) || 0
     const expedition = parseFloat(order.expedition) || 0
     const tax = parseFloat(order.tax) || 0
-    const total = subtotal + expedition + tax
+
+    let total = subtotal + expedition + tax
+
+    if (subtotal === 0) {
+        total = 0
+    }
 
     return total.toLocaleString('fr-FR', {
         style: 'currency',
         currency: 'EUR'
     })
 }
+
 
 function getStatusClass(status) {
     switch (status?.toLowerCase()) {

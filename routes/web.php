@@ -76,9 +76,18 @@ Route::get("/commandes", [OrderController::class, 'index'])->middleware(['auth',
 /* Historique des commandes */
 Route::get("/commandes/historique", [OrderController::class, 'history'])->middleware(['auth', 'verified'])->name('orders.history');
 
+/* Détails d'une commande */
+Route::get("/commandes/{id}", [OrderController::class, 'show'])->whereNumber('id')->middleware(['auth', 'verified'])->name('orders.show');
+
+/* Annulation / remboursement d'une commande */
+Route::post("/commandes/{id}/annuler", [StripeCheckoutController::class, 'cancelOrder'])->middleware(['auth', 'verified'])->name('order.cancel');
+
 /* ====================== LES FACTURES ====================== */
 
 Route::get("/factures", [InvoiceController::class, 'index'])->middleware(['auth', 'verified'])->name('invoices.index');
+
+/* Télécharger toutes les factures (archive ZIP) */
+Route::get('/factures/telecharger-tout', [InvoiceController::class, 'downloadAll'])->middleware(['auth', 'verified'])->name('invoices.download_all');
 
 /* Télécharger une facture */
 Route::get('/factures/{id}/download', [InvoiceController::class, 'download'])->middleware(['auth', 'verified'])->name('invoices.download');
@@ -100,6 +109,12 @@ Route::get('/factures/{id}/check', [InvoiceController::class, 'checkAvailability
 
 /* Page du tableau de bord */
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
+/* Mes activités */
+Route::get('/dashboard/activites', [DashboardController::class, 'showActivities'])->middleware(['auth', 'verified'])->name('dashboard.activities');
+
+/* Mes paiements / transactions */
+Route::get('/dashboard/transactions', [DashboardController::class, 'showTransactions'])->middleware(['auth', 'verified'])->name('dashboard.transactions');
 
 /* ====================== ESPACE PERSONNEL ====================== */
 Route::middleware(['auth', 'verified'])->prefix('compte')->name('account.')->group(function () {

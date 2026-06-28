@@ -1,3 +1,5 @@
+/* Mon tableau de bord */
+
 .mobile-header,
 .btn-burger {
     display: none;
@@ -18,6 +20,19 @@
     border-radius: 16px;
     height: 100%;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.card-dashboard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.profile-image {
+    width: 98px;
+    height: 98px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
 }
 
 .dashboard-header h2 {
@@ -43,6 +58,235 @@
 .card-dashboard .btn {
     width: auto;
     align-self: flex-start;
+}
+
+/* Mes activités */
+.card-activities-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.card-activity {
+    flex: 1 1 calc(33.333% - 20px);
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 250px;
+}
+
+.card-activity h3 {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: 0%;
+    color: var(--text-black);
+}
+
+.card-activity p {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: 0%;
+    color: var(--text-black);
+}
+
+.card-activity h3 > i.fa-truck-pickup {
+    font-size: 1.4em;
+    margin-right: 10px;
+    vertical-align: middle;
+    color: var(--violet-normal);
+}
+
+.card-activity h3 > i.fa-credit-card {
+    font-size: 1.2em;
+    margin-right: 10px;
+    vertical-align: middle;
+    color: var(--red-normal);
+}
+
+.card-activity h3 > i.fa-file {
+    font-size: 1.2em;
+    margin-right: 10px;
+    vertical-align: middle;
+    color: #71cca0;
+}
+
+.card-grid-activity {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.card-box h4 {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0%;
+}
+
+.card-box p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.card-box i {
+    color: var(--violet-normal);
+}
+
+.activity-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    justify-content: center;
+}
+
+.activity-buttons a {
+    width: 100%;
+}
+
+.card-box {
+    flex: 1 1 calc(50% - 20px);
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+}
+
+/* Mes paiements */
+
+.payment-container .filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.payment-container .filter-select {
+    padding: 8px 12px;
+    border-radius: 16px;
+    border: 1.5px solid rgba(73, 101, 110, 0.2);
+    background: #eefff7;
+    color: var(--text-black);
+}
+
+.payment-container .payment-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.payment-container .payment-table th,
+.payment-container .payment-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.reference-code {
+    font-family: "SF Mono", "Monaco", "Cascadia Code", monospace;
+    background: #f1f5f9;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+}
+
+.reference-code:hover {
+    background: #e2e8f0;
+    transform: scale(1.02);
+    
+}
+
+.date-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.date-main {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.date-time {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+.payment-table .amount {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #059669;
+}
+
+.payment-table .quantity-badge {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.payment-table .action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.payment-table .action-buttons a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.no-payment-message {
+    margin-top: 40px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #888;
+    text-align: center;
 }
 
 @media (max-width: 1100px) {
@@ -151,6 +395,40 @@
     .dashboard-content > .row:last-child {
         margin-bottom: 64px;
     }
+
+    .payment-container {
+        margin-bottom: 200px;
+    }
+}
+
+@media (max-width: 760px) {
+    .payment-container .payment-table-wrapper {
+        max-height: 400px;
+        overflow-y: auto;
+        overflow-x: auto;
+        padding-bottom: 1rem;
+    }
+
+    .payment-container .payment-table-wrapper::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    .payment-container .payment-table-wrapper::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 8px;
+    }
+
+    .payment-container .payment-table-wrapper::-webkit-scrollbar-thumb {
+        background-color: #c7b6f5;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+
+    .payment-container .payment-table-wrapper::-webkit-scrollbar-thumb:hover {
+        background-color: #a28cd9;
+    }
 }
 
 @media (max-width: 700px) {
@@ -168,10 +446,5 @@
         justify-content: center;
         align-items: center;
         height: 100px;
-    }
-
-    .connection-image {
-        max-width: 100%;
-        height: auto;
     }
 }

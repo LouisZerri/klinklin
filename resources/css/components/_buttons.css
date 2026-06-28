@@ -95,6 +95,25 @@
     color: var(--text-white);
 }
 
+.btn-purple-dashboard-disabled,
+.btn-purple-dashboard-disabled:hover {
+    background-color: var(--violet-normal);
+    color: var(--text-white);
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+    border: none;
+    border-radius: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    min-height: 48px;
+    transition: background-color 0.3s ease;
+    cursor: not-allowed;
+}
+
 .btn-green {
     background: var(--mint-dark);
     color: var(--text-purple);
@@ -231,17 +250,134 @@
     font-weight: 500;
     font-size: 15px;
     line-height: 20px;
-    color: #14081c;
+    color: var(--text-black);
     cursor: pointer;
 }
 
 .order-details-button {
-  background: #461871;
-  color: #FFFBFA;
-  border: none;
-  border-radius: 16px;
-  padding: 10px 20px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
+    background: var(--violet-normal);
+    color: #fffbfa;
+    border: none;
+    border-radius: 16px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.activity-button {
+    display: inline-block;
+    margin: 5px 10px 0 0;
+    padding: 10px 15px;
+    background-color: var(--violet-normal);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.activity-button:hover {
+    background-color: var(--violet-normal-hover);
+    color: white;
+}
+
+.activity-button-transparent {
+    display: inline-block;
+    margin: 5px 10px 0 0;
+    padding: 10px 15px;
+    background-color: transparent;
+    color: var(--text-black);
+    border: 1px solid var(--text-black);
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.activity-button-transparent:hover {
+    border: 1px solid var(--text-black);
+}
+
+.btn-view,
+.btn-download {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-view {
+    background: var(--violet-normal);
+    color: white;
+}
+
+.btn-view:hover {
+    background: var(--violet-normal-hover);
+}
+
+.btn-download {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.btn-download:hover {
+    background: #e5e7eb;
+}
+
+.edit-avatar-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    border: none;
+    width: 104px;
+    height: 40px;
+    background: #e3dcea;
+    border-radius: 7px;
+    transition: all 0.2s ease;
+}
+
+.edit-avatar-button:hover {
+    background: #c19de5;
+}
+
+.language-button {
+    background-color: #f7f5f1;
+    color: #888;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.language-button:hover {
+    background-color: #f0ede8;
+}
+
+.btn-confort {
+    background-color: var(--mint-dark-hover);
+    color: #010402;
+    border-radius: 16px;
+}
+
+.btn-confort:hover {
+    background-color: var(--mint-dark);
+}
+
+.btn-essentielle {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    color: #000;
+    border-radius: 16px;
+}
+
+.btn-essentielle:hover {
+    background-color: var(--mint-dark-hover);
 }

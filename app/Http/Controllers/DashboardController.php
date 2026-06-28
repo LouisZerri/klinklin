@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\Models\Order;
-use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -14,15 +15,12 @@ class DashboardController extends Controller
 
         $user = Auth::user();
 
-        // Supprimer l'ancienne session order_id
+        // Annuler l'ancienne commande non finalisée (on conserve ses articles)
         if (session()->has('order_id')) {
-            
+
             $orderId = session('order_id');
 
-            // Supprimer d'abord les order_items associés
-            OrderItem::where('order_id', $orderId)->delete();
-
-            // On passe la commande à annulé
+            // On passe la commande à annulée (sans supprimer ses articles)
             Order::where('id', $orderId)->update(['status' => 'Annulée']);
 
             // Supprimer la session
@@ -30,5 +28,58 @@ class DashboardController extends Controller
         }
 
         return view('dashboard', compact('user'));
-    } 
+    }
+
+    public function showActivities()
+    {
+        $userId = Auth::id();
+
+        $ordersInProgress = Order::where('user_id', $userId)
+            ->whereNotIn('status', ['Annulée', 'Livré'])
+            ->count();
+
+        $latestPayments = Order::where('user_id', $userId)
+            ->whereNotIn('status', ['Livré', 'Annulée'])
+            ->get()
+            ->sum(fn($order) => $order->subtotal + $order->expedition + $order->tax);
+
+        $invoices = Invoice::where('user_id', $userId)->count();
+
+        return view('dashboard.activities', [
+            'ordersInProgress' => $ordersInProgress,
+            'latestPayments' => $latestPayments,
+            'invoices' => $invoices,
+        ]);
+    }
+
+    public function showTransactions()
+    {
+        $orders = DB::table('orders')
+            ->join('invoices', 'orders.id', '=', 'invoices.order_id')
+            ->leftJoin('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->select(
+                'orders.id as order_id',
+                'invoices.reference as invoice_reference',
+                'invoices.invoice_date',
+                'orders.order_date',
+                DB::raw('(orders.subtotal + orders.expedition + orders.tax) as total_amount'),
+                DB::raw('SUM(order_items.quantity) as total_quantity')
+            )
+            ->where('orders.user_id', Auth::id())
+            ->where('orders.subtotal', '!=', 0)
+            ->groupBy(
+                'orders.id',
+                'invoices.reference',
+                'invoices.invoice_date',
+                'orders.order_date',
+                'orders.subtotal',
+                'orders.expedition',
+                'orders.tax'
+            )
+            ->get();
+
+        return view('dashboard.transactions', [
+            'orders' => $orders
+        ]);
+    }
 }

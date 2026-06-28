@@ -138,6 +138,37 @@ class StripeCheckoutController extends Controller
         $invoice->save();
     }
 
+    public function cancelOrder($orderId)
+    {
+        $order = Order::where('id', $orderId)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
 
+        if ($order->status !== 'En attente') {
+            return redirect()->route('dashboard')->with('error', 'La commande ne peut pas être remboursée');
+        }
 
+        try {
+            \Stripe\Stripe::setApiKey(config('stripe.secret_key'));
+
+            $paymentIntent = \Stripe\PaymentIntent::retrieve($order->payment_intent_id);
+            $chargeId = $paymentIntent->latest_charge;
+
+            if (!$chargeId) {
+                return redirect()->route('dashboard')->with('error', 'Aucune charge trouvée pour ce paiement');
+            }
+
+            \Stripe\Refund::create([
+                'charge' => $chargeId,
+                'reason' => 'requested_by_customer',
+            ]);
+
+            $order->status = 'Annulée';
+            $order->save();
+
+            return redirect()->route('dashboard')->with('success', 'Commande annulée et remboursée avec succès');
+        } catch (\Exception $e) {
+            return redirect()->route('dashboard')->with('error', 'Erreur lors de l\'annulation : ' . $e->getMessage());
+        }
+    }
 }

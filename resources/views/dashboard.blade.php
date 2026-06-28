@@ -66,7 +66,7 @@
                         Factures, collectes, paiements… tout est ici pour
                         vous simplifier la vie.
                     </p>
-                    <a href="#" class="btn btn-red mt-auto">Voir mes activités →</a>
+                    <a href="{{ route('dashboard.activities') }}" class="btn btn-red mt-auto">Voir mes activités →</a>
                 </div>
             </div>
         </div>

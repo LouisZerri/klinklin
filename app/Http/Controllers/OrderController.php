@@ -18,6 +18,21 @@ class OrderController extends Controller
     }
 
     /**
+     * Détails d'une commande.
+     */
+    public function show($id)
+    {
+        $order = Order::with(['orderItems.article'])
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        return view('orders.show', [
+            'order' => $order
+        ]);
+    }
+
+    /**
      * Historique des commandes.
      */
     public function history()

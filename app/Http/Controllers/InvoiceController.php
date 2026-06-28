@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use ZipArchive;
 
 class InvoiceController extends Controller
 {
@@ -15,6 +16,37 @@ class InvoiceController extends Controller
         return view("invoices.index", [
             'invoices' => $invoices
         ]);
+    }
+
+    /**
+     * Télécharger toutes les factures dans une archive ZIP
+     */
+    public function downloadAll()
+    {
+        $userId = Auth::id();
+        $invoices = Invoice::where('user_id', $userId)->get();
+
+        if ($invoices->isEmpty()) {
+            return redirect()->back()->with('error', 'Aucune facture disponible');
+        }
+
+        $zipFileName = 'factures_' . $userId . '.zip';
+        $zipPath = storage_path('app/public/' . $zipFileName);
+
+        $zip = new ZipArchive;
+        if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+            foreach ($invoices as $invoice) {
+                if ($invoice->pdf_path && Storage::disk('public')->exists($invoice->pdf_path)) {
+                    $absolutePath = storage_path('app/public/' . $invoice->pdf_path);
+                    $zip->addFile($absolutePath, 'facture_' . $invoice->id . '.pdf');
+                }
+            }
+            $zip->close();
+        } else {
+            return redirect()->back()->with('error', 'Impossible de créer l\'archive ZIP');
+        }
+
+        return response()->download($zipPath)->deleteFileAfterSend(true);
     }
 
      /**

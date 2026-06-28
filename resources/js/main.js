@@ -12,6 +12,7 @@ import Order from './components/Order.vue';
 import Invoice from './components/Invoice.vue';
 import SimulationSelector from './components/SimulationSelector.vue';
 import OrderHistory from './components/OrderHistory.vue';
+import PaymentHistory from './components/PaymentHistory.vue';
 
 
 // INTEGRATION DE VUEJS 
@@ -28,6 +29,7 @@ app.component('Order', Order);
 app.component('Invoice', Invoice);
 app.component('SimulationSelector', SimulationSelector);
 app.component('OrderHistory', OrderHistory);
+app.component('PaymentHistory', PaymentHistory);
 
 
 app.mount('#app')
