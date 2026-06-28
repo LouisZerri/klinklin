@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Subscription;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +14,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call(ArticleSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $subscription = Subscription::firstOrCreate(
+            ['name' => 'Standard'],
+            [
+                'price' => 0,
+                'status' => 'active',
+                'start_date' => now(),
+            ]
+        );
+
+        Subscription::firstOrCreate(
+            ['name' => 'Premium'],
+            [
+                'price' => 1990,
+                'status' => 'active',
+                'start_date' => now(),
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'test@example.com'],
+            [
+                'lastname' => 'Test',
+                'firstname' => 'Utilisateur',
+                'phone' => '+33600000000',
+                'password' => Hash::make('password'),
+                'subscription_id' => $subscription->id,
+            ]
+        );
     }
 }
