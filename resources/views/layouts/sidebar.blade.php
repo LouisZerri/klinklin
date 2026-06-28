@@ -70,23 +70,23 @@
                 <a class="nav-link {{ Route::is('dashboard', 'orders.index', 'invoices.index') ? 'active' : '' }}" href="{{ route('dashboard') }}"><i class="fas fa-home me-2"></i>Accueil</a>
             </li>
             <li class="nav-item mb-3">
-                <a class="nav-link text-white" href="#"><i class="fas fa-user me-2"></i>Profil</a>
+                <a class="nav-link {{ Route::is('account.profile') ? 'active' : 'text-white' }}" href="{{ route('account.profile') }}"><i class="fas fa-user me-2"></i>Profil</a>
             </li>
             <li class="nav-item mb-3">
-                <a class="nav-link text-white" href="#"><i class="fas fa-box me-2"></i>Mon abonnement</a>
+                <a class="nav-link {{ Route::is('account.subscription') ? 'active' : 'text-white' }}" href="{{ route('account.subscription') }}"><i class="fas fa-box me-2"></i>Mon abonnement</a>
             </li>
             <li class="nav-item mb-3">
-                <a class="nav-link text-white" href="#"><i class="fa-solid fa-lock me-2"></i>Sécurité</a>
+                <a class="nav-link {{ Route::is('account.security') ? 'active' : 'text-white' }}" href="{{ route('account.security') }}"><i class="fa-solid fa-lock me-2"></i>Sécurité</a>
             </li>
             <li class="nav-item mb-3">
-                <a class="nav-link text-white" href="#"><i class="fas fa-bell me-2"></i>Notifications</a>
+                <a class="nav-link {{ Route::is('account.notifications') ? 'active' : 'text-white' }}" href="{{ route('account.notifications') }}"><i class="fas fa-bell me-2"></i>Notifications</a>
             </li>
             <li class="nav-item mb-3">
-                <a class="nav-link text-white" href="#"><i class="fas fa-question-circle me-2"></i>Aide &
+                <a class="nav-link {{ Route::is('account.support') ? 'active' : 'text-white' }}" href="{{ route('account.support') }}"><i class="fas fa-question-circle me-2"></i>Aide &
                     Support</a>
             </li>
             <li class="nav-item mb-4">
-                <a class="nav-link text-white" href="#"><i class="fas fa-shield-alt me-2"></i>Politique de
+                <a class="nav-link {{ Route::is('account.privacy') ? 'active' : 'text-white' }}" href="{{ route('account.privacy') }}"><i class="fas fa-shield-alt me-2"></i>Politique de
                     confidentialité</a>
             </li>
         </ul>

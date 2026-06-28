@@ -33,10 +33,11 @@ class StripeCheckoutController extends Controller
         $stripe = new \Stripe\StripeClient(config('stripe.secret_key'));
         
         $total = $this->getTotal();
-        
-        // Stripe attend le motant en centimes
+
+        // Stripe attend le montant en centimes (entier).
+        // On part du montant numérique brut, pas de la chaîne formatée.
         $paymentIntent = $stripe->paymentIntents->create([
-            'amount' => $total['total'] * 100,
+            'amount' => (int) round($total['raw'] * 100),
             'currency' => 'eur',
             'automatic_payment_methods' => ['enabled' => true],
         ]);
@@ -55,14 +56,13 @@ class StripeCheckoutController extends Controller
             ->latest()
             ->first();
 
-        $total = number_format($order->subtotal + $order->expedition + $order->tax, 0, ',', ' ');
+        $raw = $order->subtotal + $order->expedition + $order->tax;
 
-        $result = [
+        return [
             'order' => $order,
-            'total' => $total
+            'total' => number_format($raw, 2, ',', ' '),
+            'raw' => $raw,
         ];
-
-        return $result;
     }
 
 
@@ -108,8 +108,8 @@ class StripeCheckoutController extends Controller
             return (object) [
                 'article' => $first->article,
                 'quantity' => $items->sum('quantity'),
-                'unit_price' => $first->price,
-                'total' => $items->sum(fn($item) => $item->price * $item->quantity),
+                'unit_price' => $first->unit_price,
+                'total' => $items->sum(fn($item) => $item->unit_price * $item->quantity),
             ];
         });
 

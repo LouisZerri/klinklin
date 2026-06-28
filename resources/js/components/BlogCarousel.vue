@@ -15,7 +15,8 @@
             <div class="carousel-wrapper" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
                 <div v-for="(group, index) in blogPostGroups" :key="index" class="carousel-slide">
                     <div class="d-flex flex-column flex-lg-row gap-4 justify-content-center align-items-end">
-                        <div v-for="post in group" :key="post.title" class="blog-card position-relative">
+                        <a v-for="post in group" :key="post.title" :href="post.url || '#'"
+                            class="blog-card position-relative">
                             <div class="blog-img">
                                 <img :src="post.image" :alt="post.title" />
                             </div>
@@ -24,7 +25,7 @@
                                 <h3 class="blog-card-title">{{ post.title }}</h3>
                                 <p class="blog-card-text">{{ post.text }}</p>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -33,7 +34,7 @@
         <div class="blog-controls">
             <button class="btn btn-outline-secondary rounded-pill px-4 py-2 d-flex align-items-center gap-2"
                 @click="previousSlide">
-                <span class="arrow-prev"></span> Previous
+                <span class="arrow-prev"></span> Précédent
             </button>
 
             <div class="blog-dots d-flex gap-3">
@@ -43,7 +44,7 @@
 
             <button class="btn btn-outline-dark rounded-pill px-4 py-2 d-flex align-items-center gap-2"
                 @click="nextSlide">
-                Next <span class="arrow-next"></span>
+                Suivant <span class="arrow-next"></span>
             </button>
         </div>
     </section>
@@ -52,13 +53,20 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 
+const props = defineProps({
+    posts: {
+        type: Array,
+        default: () => [],
+    },
+});
+
 const currentSlide = ref(0);
 let autoplayInterval = null;
 
 const erreurImg = '/images/erreurs.png';
 const lavageImg = '/images/lavage.png';
 
-const blogPosts = [
+const fallbackPosts = [
     {
         title: "5 erreurs à éviter quand vous lavez vos vêtements",
         tag: "Nouveau",
@@ -109,10 +117,13 @@ const blogPosts = [
     }
 ];
 
+const blogPosts = computed(() => (props.posts.length ? props.posts : fallbackPosts));
+
 const blogPostGroups = computed(() => {
     const groups = [];
-    for (let i = 0; i < blogPosts.length; i += 2) {
-        groups.push(blogPosts.slice(i, i + 2));
+    const posts = blogPosts.value;
+    for (let i = 0; i < posts.length; i += 2) {
+        groups.push(posts.slice(i, i + 2));
     }
     return groups;
 });

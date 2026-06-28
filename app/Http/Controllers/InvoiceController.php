@@ -65,7 +65,7 @@ class InvoiceController extends Controller
         // Retourner le fichier pour visualisation dans le navigateur
         return response()->file($filePath, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="Facture_' . $invoice->invoice_number . '.pdf"'
+            'Content-Disposition' => 'inline; filename="Facture_' . $invoice->reference . '.pdf"'
         ]);
     }
 

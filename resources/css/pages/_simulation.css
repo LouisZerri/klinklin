@@ -1,0 +1,202 @@
+/* Page de simulation de tarif (publique) */
+
+.simulation-page {
+    max-width: 1100px;
+}
+
+/* Garder le titre centré même en responsive (override de .hero-title text-align:left) */
+.simulation-header .hero-title,
+.simulation-header .hero-subtitle {
+    text-align: center;
+}
+
+@media (max-width: 575px) {
+    .simulation-header .hero-title {
+        font-size: 32px !important;
+    }
+}
+
+.simulation-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+}
+
+.simulation-articles {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* Une seule colonne d'articles à côté du récapitulatif */
+.simulation-articles .articles-grid {
+    grid-template-columns: 1fr;
+}
+
+.article-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--mint-normal);
+    color: var(--violet-normal);
+    font-size: 2.5rem;
+}
+
+/* Sélecteur de poids redessiné (scopé à la simulation) */
+.simulation-wrapper .select-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 240px;
+    margin-top: 8px;
+    border: 1px solid var(--gray-lighter);
+    border-radius: 10px;
+    background-color: #faf9fb;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.simulation-wrapper .select-wrapper:focus-within {
+    border-color: var(--violet-normal);
+    box-shadow: 0 0 0 3px rgba(70, 24, 113, 0.12);
+}
+
+.simulation-wrapper .article-weight {
+    width: 100%;
+    padding: 9px 36px 9px 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-purple);
+    border-radius: 10px;
+}
+
+.simulation-wrapper .select-icon {
+    right: 14px;
+    color: var(--violet-normal);
+    font-size: 0.8rem;
+}
+
+/* Carte et disposition aérée (scopé à la simulation) */
+.simulation-wrapper .article-card {
+    height: auto;
+    align-items: stretch;
+    padding: 16px;
+    gap: 20px;
+}
+
+.simulation-wrapper .article-details {
+    height: auto;
+    gap: 16px;
+}
+
+/* Sélecteur de quantité redessiné */
+.simulation-wrapper .quantity-input-group {
+    width: 132px;
+    height: 44px;
+    margin-top: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--gray-lighter);
+    background: #faf9fb;
+    padding: 0 8px;
+}
+
+.simulation-wrapper .quantity-input-group .btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--mint-normal);
+    color: var(--violet-normal);
+    font-size: 14px;
+    transition: background-color 0.15s ease;
+}
+
+.simulation-wrapper .quantity-input-group .btn:hover {
+    background: var(--mint-dark);
+}
+
+.simulation-wrapper .quantity-input-group .form-control {
+    width: 36px;
+    font-weight: 600;
+    color: var(--text-purple);
+}
+
+/* Récapitulatif latéral */
+.simulation-summary {
+    flex: 0 0 320px;
+    position: sticky;
+    top: 24px;
+    background-color: #fff;
+    border: 1px solid var(--gray-lighter);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(20, 8, 28, 0.06);
+}
+
+.simulation-summary-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-purple);
+    margin-bottom: 16px;
+}
+
+.simulation-empty {
+    color: var(--gray-dark);
+    font-size: 0.95rem;
+    padding: 12px 0 4px;
+}
+
+.simulation-lines {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+    border-bottom: 1px solid var(--gray-lighter);
+}
+
+.simulation-lines li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: var(--gray-darker);
+    padding: 6px 0;
+}
+
+.simulation-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    color: var(--gray-darker);
+}
+
+.simulation-total {
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--gray-lighter);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--text-purple);
+}
+
+.simulation-weight {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: var(--gray-dark);
+}
+
+.simulation-note {
+    margin-top: 12px;
+    margin-bottom: 0;
+    font-size: 0.78rem;
+    color: var(--gray-normal);
+    text-align: center;
+}
+
+@media (max-width: 900px) {
+    .simulation-wrapper {
+        flex-direction: column;
+    }
+
+    .simulation-summary {
+        position: static;
+        flex: 1 1 auto;
+        width: 100%;
+    }
+}

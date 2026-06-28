@@ -10,6 +10,8 @@ import StripeCheckout from './components/StripeCheckout.vue';
 import Confettis from './components/Confettis.vue';
 import Order from './components/Order.vue';
 import Invoice from './components/Invoice.vue';
+import SimulationSelector from './components/SimulationSelector.vue';
+import OrderHistory from './components/OrderHistory.vue';
 
 
 // INTEGRATION DE VUEJS 
@@ -24,6 +26,8 @@ app.component('StripeCheckout', StripeCheckout)
 app.component('Confettis', Confettis);
 app.component('Order', Order);
 app.component('Invoice', Invoice);
+app.component('SimulationSelector', SimulationSelector);
+app.component('OrderHistory', OrderHistory);
 
 
 app.mount('#app')
@@ -121,6 +125,22 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector(".nav-menu").classList.toggle("active");
         });
     }
+
+    // Affichage / masquage du mot de passe (icône œil)
+    document.querySelectorAll(".input-icon").forEach((wrapper) => {
+        const icon = wrapper.querySelector("i.fa-eye-slash, i.fa-eye");
+        const input = wrapper.querySelector("input");
+
+        if (!icon || !input || input.type !== "password") return;
+
+        icon.style.cursor = "pointer";
+        icon.addEventListener("click", () => {
+            const isHidden = input.type === "password";
+            input.type = isHidden ? "text" : "password";
+            icon.classList.toggle("fa-eye-slash", !isHidden);
+            icon.classList.toggle("fa-eye", isHidden);
+        });
+    });
 
     // Gestion des toasts
     const flash = document.getElementById("toast-data");

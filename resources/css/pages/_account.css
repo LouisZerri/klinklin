@@ -1,0 +1,372 @@
+/* Espace personnel (Profil, Abonnement, Notifications, Aide, Confidentialité) */
+
+.account-page {
+    width: 100%;
+}
+
+/* Mise en page 2 panneaux : contenu principal + panneau contextuel */
+.account-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 28px;
+    align-items: start;
+}
+
+.account-aside {
+    position: sticky;
+    top: 24px;
+    background: linear-gradient(160deg, var(--violet-normal), var(--violet-dark));
+    color: var(--text-white);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 12px 28px rgba(31, 11, 51, 0.18);
+}
+
+.account-aside-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.15);
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+}
+
+.account-aside h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.account-aside p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.account-aside ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.account-aside li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.account-aside li::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 1px;
+    color: var(--mint-dark);
+    font-size: 0.8rem;
+}
+
+@media (max-width: 992px) {
+    .account-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .account-aside {
+        position: static;
+    }
+}
+
+/* Titres alignés sur le design des pages /commandes, /dashboard, etc. */
+.account-header h2 {
+    font-weight: 700;
+    font-size: 48px;
+}
+
+.account-header p {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.account-card {
+    background-color: #fff;
+    border: 1px solid var(--gray-lighter);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(20, 8, 28, 0.05);
+}
+
+.account-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-purple);
+    margin-bottom: 16px;
+}
+
+.account-section-heading {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-purple);
+    margin-bottom: 16px;
+}
+
+/* --- Profil --- */
+.account-profile-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--gray-lighter);
+}
+
+.account-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--mint-dark);
+}
+
+.account-profile-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-purple);
+}
+
+.account-profile-email {
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+}
+
+.account-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.account-grid-2 {
+    gap: 24px;
+}
+
+.account-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-field label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--gray-darker);
+    margin-bottom: 6px;
+}
+
+.account-field .form-control {
+    border: 1px solid var(--gray-lighter);
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+.account-field .form-control:focus {
+    border-color: var(--violet-normal);
+    box-shadow: 0 0 0 3px rgba(70, 24, 113, 0.12);
+}
+
+.account-actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* --- Abonnement --- */
+.account-current-plan {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.account-plan-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-purple);
+    margin-bottom: 6px;
+}
+
+.account-plan-price {
+    font-weight: 700;
+    color: var(--violet-normal);
+}
+
+.account-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.account-badge-active {
+    background-color: var(--mint-normal);
+    color: var(--text-green-dark);
+}
+
+.account-badge-cancelled,
+.account-badge-expired {
+    background-color: #ffe3e3;
+    color: var(--red-normal-hover);
+}
+
+.account-plans {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.account-plan-card {
+    background-color: #fff;
+    border: 1px solid var(--gray-lighter);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+}
+
+.account-plan-card.is-current {
+    border-color: var(--violet-normal);
+    box-shadow: 0 0 0 3px rgba(70, 24, 113, 0.1);
+}
+
+.account-plan-card-name {
+    font-weight: 700;
+    color: var(--text-purple);
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.account-plan-card-price {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--violet-normal);
+    margin-bottom: 16px;
+}
+
+.account-plan-card-price span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gray-dark);
+}
+
+.account-note {
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+}
+
+/* --- Notifications (interrupteurs) --- */
+.account-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--gray-lighter);
+    cursor: pointer;
+}
+
+.account-toggle:first-child {
+    padding-top: 0;
+}
+
+.account-toggle-label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-purple);
+}
+
+.account-toggle-desc {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--gray-dark);
+}
+
+.account-switch {
+    position: relative;
+    flex-shrink: 0;
+    width: 48px;
+    height: 26px;
+}
+
+.account-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.account-slider {
+    position: absolute;
+    inset: 0;
+    background-color: var(--gray-light);
+    border-radius: 999px;
+    transition: background-color 0.2s ease;
+}
+
+.account-slider::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 3px;
+    top: 3px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.account-switch input:checked + .account-slider {
+    background-color: var(--violet-normal);
+}
+
+.account-switch input:checked + .account-slider::before {
+    transform: translateX(22px);
+}
+
+/* --- Aide & support --- */
+.account-support-card {
+    text-align: center;
+}
+
+.account-support-icon {
+    font-size: 1.8rem;
+    color: var(--violet-normal);
+    margin-bottom: 12px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .account-header h2,
+    .account-header p {
+        text-align: center;
+    }
+
+    .account-grid,
+    .account-plans {
+        grid-template-columns: 1fr;
+    }
+
+    .account-card {
+        padding: 20px;
+    }
+
+    .account-actions {
+        justify-content: stretch;
+    }
+
+    .account-actions .btn {
+        width: 100%;
+    }
+}

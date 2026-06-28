@@ -15,6 +15,7 @@ class ArticleSeeder extends Seeder
         $articles = [
             [
                 'name' => 'Chemise',
+                'image_url' => '/images/articles/chemise.jpg',
                 'type' => 'Vêtements',
                 'usage' => ['Lavage', 'Repassage'],
                 'unit_price' => 4.50,
@@ -22,6 +23,7 @@ class ArticleSeeder extends Seeder
             ],
             [
                 'name' => 'Pantalon',
+                'image_url' => '/images/articles/pantalon.jpg',
                 'type' => 'Vêtements',
                 'usage' => ['Lavage', 'Repassage'],
                 'unit_price' => 5.00,
@@ -29,6 +31,7 @@ class ArticleSeeder extends Seeder
             ],
             [
                 'name' => 'Pull',
+                'image_url' => '/images/articles/pull.jpg',
                 'type' => 'Vêtements',
                 'usage' => ['Lavage'],
                 'unit_price' => 6.00,
@@ -36,6 +39,7 @@ class ArticleSeeder extends Seeder
             ],
             [
                 'name' => 'Drap',
+                'image_url' => '/images/articles/drap.jpg',
                 'type' => 'Linge de maison',
                 'usage' => ['Lavage', 'Repassage'],
                 'unit_price' => 7.50,
@@ -43,6 +47,7 @@ class ArticleSeeder extends Seeder
             ],
             [
                 'name' => 'Housse de couette',
+                'image_url' => '/images/articles/housse.jpg',
                 'type' => 'Linge de maison',
                 'usage' => ['Lavage', 'Repassage'],
                 'unit_price' => 9.00,
@@ -50,6 +55,7 @@ class ArticleSeeder extends Seeder
             ],
             [
                 'name' => 'Robe en soie',
+                'image_url' => '/images/articles/robe.jpg',
                 'type' => 'Délicat',
                 'usage' => ['Nettoyage à sec'],
                 'unit_price' => 12.00,
@@ -57,6 +63,7 @@ class ArticleSeeder extends Seeder
             ],
             [
                 'name' => 'Costume',
+                'image_url' => '/images/articles/costume.jpg',
                 'type' => 'Délicat',
                 'usage' => ['Nettoyage à sec', 'Repassage'],
                 'unit_price' => 15.00,

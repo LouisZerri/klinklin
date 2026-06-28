@@ -44,5 +44,7 @@ class DatabaseSeeder extends Seeder
                 'subscription_id' => $subscription->id,
             ]
         );
+
+        $this->call(OrderSeeder::class);
     }
 }

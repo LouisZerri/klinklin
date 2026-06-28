@@ -52,12 +52,6 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-    /* Un utilisateur peut avoir effectué plusieurs paiement */
-    public function payments()
-    {
-        return $this->hasMany(Payment::class);
-    }
-
     /* Un utilisateur peut avoir plusieurs factures */
     public function invoices()
     {

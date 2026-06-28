@@ -173,3 +173,20 @@
     color: var(--gray-subtitle);
     margin: 0;
 }
+
+/* La carte blog est devenue un lien : conserver son apparence */
+a.blog-card,
+a.blog-card:hover,
+a.blog-card:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.blog-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+a.blog-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(20, 8, 28, 0.12);
+}

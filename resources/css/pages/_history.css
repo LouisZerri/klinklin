@@ -1,0 +1,119 @@
+/* Historique des commandes */
+
+.history-filters {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.history-select {
+    position: relative;
+}
+
+.history-select select {
+    appearance: none;
+    background-color: var(--mint-normal);
+    border: 1px solid var(--mint-dark);
+    color: var(--text-purple);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 10px 40px 10px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.history-select select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(141, 255, 200, 0.4);
+}
+
+.history-select::after {
+    content: '\f078';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.7rem;
+    color: var(--text-purple);
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Tableau */
+.history-table-wrapper {
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table th {
+    text-align: left;
+    font-weight: 700;
+    color: var(--text-black);
+    font-size: 1rem;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-lighter);
+}
+
+.history-table td {
+    padding: 20px;
+    color: var(--gray-darker);
+    border-bottom: 1px solid var(--gray-lighter);
+    white-space: nowrap;
+}
+
+.history-table tbody tr:hover {
+    background-color: #faf9fb;
+}
+
+.history-empty {
+    text-align: center;
+    color: var(--gray-dark);
+    padding: 32px 20px;
+}
+
+/* Badges de statut */
+.history-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.history-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: currentColor;
+}
+
+.history-badge-green {
+    background-color: var(--mint-normal);
+    color: var(--text-green-dark);
+}
+
+.history-badge-red {
+    background-color: #ffe0e0;
+    color: #e05757;
+}
+
+.history-badge-neutral {
+    background-color: var(--gray-lighter);
+    color: var(--gray-darker);
+}
+
+@media (max-width: 768px) {
+    .history-table th,
+    .history-table td {
+        padding: 14px;
+        font-size: 0.9rem;
+    }
+}

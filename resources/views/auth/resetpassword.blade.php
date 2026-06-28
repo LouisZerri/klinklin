@@ -84,8 +84,5 @@
         </form>
     </div>
 </div>
-<div class="chat-widget">
-    <img src="/images/chat.png" alt="Chat" />
-</div>
 
 @endsection

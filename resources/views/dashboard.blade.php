@@ -54,7 +54,7 @@
                         Retrouvez toutes vos collectes passées en un clin
                         d’œil.
                     </p>
-                    <a href="#" class="btn btn-yellow mt-auto">Voir mes historiques →</a>
+                    <a href="{{ route('orders.history') }}" class="btn btn-yellow mt-auto">Voir mes historiques →</a>
                 </div>
             </div>
 

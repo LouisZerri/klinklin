@@ -156,27 +156,23 @@
                 </div>
             </div>
 
-            <!-- Filtre par usage -->
+            <!-- Filtre par prestation -->
             <div class="filter-section">
                 <div class="filter-title">
-                    Par usage <i class="fas fa-chevron-down"></i>
+                    Par prestation <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="filter-options">
                     <div class="filter-option">
-                        <input type="checkbox" id="homme" v-model="filters.usages" value="Homme" />
-                        <label for="homme">Homme</label>
+                        <input type="checkbox" id="lavage" v-model="filters.usages" value="Lavage" />
+                        <label for="lavage">Lavage</label>
                     </div>
                     <div class="filter-option">
-                        <input type="checkbox" id="femme" v-model="filters.usages" value="Femme" />
-                        <label for="femme">Femme</label>
+                        <input type="checkbox" id="repassage" v-model="filters.usages" value="Repassage" />
+                        <label for="repassage">Repassage</label>
                     </div>
                     <div class="filter-option">
-                        <input type="checkbox" id="enfant" v-model="filters.usages" value="Enfant" />
-                        <label for="enfant">Enfant</label>
-                    </div>
-                    <div class="filter-option">
-                        <input type="checkbox" id="bebe" v-model="filters.usages" value="Bébé" />
-                        <label for="bebe">Bébé</label>
+                        <input type="checkbox" id="nettoyage" v-model="filters.usages" value="Nettoyage à sec" />
+                        <label for="nettoyage">Nettoyage à sec</label>
                     </div>
                 </div>
             </div>

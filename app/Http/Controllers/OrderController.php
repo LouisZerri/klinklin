@@ -17,4 +17,17 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * Historique des commandes.
+     */
+    public function history()
+    {
+        $orders = Order::where('user_id', Auth::id())
+            ->orderBy('order_date', 'desc')
+            ->get();
+
+        return view('orders.history', [
+            'orders' => $orders,
+        ]);
+    }
 }
