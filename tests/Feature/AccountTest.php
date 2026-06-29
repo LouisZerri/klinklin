@@ -13,6 +13,7 @@ class AccountTest extends TestCase
 
     public function test_a_user_can_update_their_profile(): void
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->put(route('account.profile.update'), [
@@ -33,6 +34,7 @@ class AccountTest extends TestCase
 
     public function test_profile_update_validates_the_email(): void
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->put(route('account.profile.update'), [
@@ -48,6 +50,7 @@ class AccountTest extends TestCase
 
     public function test_password_update_requires_the_correct_current_password(): void
     {
+        /** @var User $user */
         $user = User::factory()->create(['password' => Hash::make('Current1@pass')]);
 
         $response = $this->actingAs($user)->put(route('account.security.update'), [
@@ -62,6 +65,7 @@ class AccountTest extends TestCase
 
     public function test_a_user_can_change_their_password(): void
     {
+        /** @var User $user */
         $user = User::factory()->create(['password' => Hash::make('Current1@pass')]);
 
         $this->actingAs($user)->put(route('account.security.update'), [

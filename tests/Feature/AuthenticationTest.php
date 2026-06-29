@@ -18,6 +18,7 @@ class AuthenticationTest extends TestCase
 
     public function test_a_user_can_login_with_valid_credentials(): void
     {
+        /** @var User $user */
         $user = User::factory()->create(['password' => Hash::make('Strong1@pass')]);
 
         $response = $this->post('/login', [
@@ -31,6 +32,7 @@ class AuthenticationTest extends TestCase
 
     public function test_a_user_cannot_login_with_wrong_password(): void
     {
+        /** @var User $user */
         $user = User::factory()->create(['password' => Hash::make('Strong1@pass')]);
 
         $response = $this->post('/login', [
@@ -44,6 +46,7 @@ class AuthenticationTest extends TestCase
 
     public function test_a_user_can_logout(): void
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         $this->actingAs($user)->post('/logout')->assertRedirect('/');

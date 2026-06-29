@@ -13,6 +13,7 @@ class PickupTest extends TestCase
 
     public function test_starting_a_pickup_creates_a_pending_order(): void
     {
+        /** @var User $user */
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post(route('post_address'), [

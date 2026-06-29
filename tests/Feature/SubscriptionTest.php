@@ -26,6 +26,7 @@ class SubscriptionTest extends TestCase
     public function test_free_user_sees_the_premium_offer(): void
     {
         $this->premiumPlan();
+        /** @var User $user */
         $user = User::factory()->create();
 
         $this->actingAs($user)
@@ -38,6 +39,7 @@ class SubscriptionTest extends TestCase
     public function test_activation_makes_the_user_premium(): void
     {
         $plan = $this->premiumPlan();
+        /** @var User $user */
         $user = User::factory()->create();
 
         app(SubscriptionService::class)->activate($user->id, 'cus_test', 'sub_test');
@@ -50,6 +52,7 @@ class SubscriptionTest extends TestCase
     public function test_deactivation_reverts_the_user_to_free(): void
     {
         $this->premiumPlan();
+        /** @var User $user */
         $user = User::factory()->create([
             'stripe_subscription_id' => 'sub_test',
             'subscription_status' => 'active',

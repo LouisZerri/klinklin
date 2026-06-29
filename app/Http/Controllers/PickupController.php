@@ -8,6 +8,7 @@ use App\Http\Requests\Pickup\UpdateInfosRequest;
 use App\Models\Article;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,14 +40,17 @@ class PickupController extends Controller
     {
         $validated = $request->validated();
 
+        /** @var User $user */
+        $user = Auth::user();
+
         $order = Order::create([
             ...$validated,
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
             'order_number' => $this->generateOrderNumber(),
             'status' => OrderStatus::Pending,
             'subtotal' => 0,
             // Livraison offerte pour les abonnés Premium (figée à la commande).
-            'expedition' => Auth::user()->hasActiveSubscription() ? 0 : config('pricing.expedition'),
+            'expedition' => $user->hasActiveSubscription() ? 0 : config('pricing.expedition'),
             'tax' => config('pricing.tax'),
         ]);
 
@@ -110,7 +114,9 @@ class PickupController extends Controller
         $order->subtotal = $subtotal;
 
         // Remise Premium (-10 %) figée au moment de la commande.
-        $order->discount = Auth::user()->hasActiveSubscription()
+        /** @var User $user */
+        $user = Auth::user();
+        $order->discount = $user->hasActiveSubscription()
             ? round($subtotal * config('pricing.premium_discount'), 2)
             : 0;
 
