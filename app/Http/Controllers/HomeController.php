@@ -19,16 +19,12 @@ class HomeController extends Controller
      */
     public function simulation()
     {
-        // Tarifs alignés sur ceux appliqués à une commande réelle.
-        $deliveryFee = 10;
-        $taxFee = 5;
-
         return view('simulation', [
             'articles' => Article::all(),
             'ctaUrl' => Auth::check() ? route('collecte') : route('register'),
             'ctaLabel' => Auth::check() ? 'Planifier ma collecte' : 'Créer un compte pour commander',
-            'deliveryFee' => $deliveryFee,
-            'taxFee' => $taxFee,
+            'deliveryFee' => config('pricing.expedition'),
+            'taxFee' => config('pricing.tax'),
         ]);
     }
 }

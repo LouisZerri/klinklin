@@ -405,3 +405,93 @@
         width: 100%;
     }
 }
+
+/* --- Abonnement (formules) --- */
+.sub-plans {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.sub-plan-featured {
+    border: 2px solid var(--violet-normal);
+    box-shadow: 0 12px 28px rgba(70, 24, 113, 0.12);
+}
+
+.sub-plan-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.sub-plan-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-purple);
+}
+
+.sub-plan-name .fa-crown {
+    color: #f0b429;
+}
+
+.sub-plan-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--violet-normal);
+    white-space: nowrap;
+}
+
+.sub-plan-price span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gray-dark);
+}
+
+.sub-plan-tag {
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+    margin: 8px 0 16px;
+}
+
+.sub-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sub-benefits li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    color: var(--gray-darker);
+}
+
+.sub-benefits li .fa-check {
+    color: var(--mint-smooth);
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.sub-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.sub-badge-premium {
+    background: linear-gradient(135deg, #f0b429, #e8910c);
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .sub-plans {
+        grid-template-columns: 1fr;
+    }
+}

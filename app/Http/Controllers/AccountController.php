@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Subscription;
+use App\Http\Requests\Account\UpdatePasswordRequest;
+use App\Http\Requests\Account\UpdateProfileRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 
 class AccountController extends Controller
 {
@@ -24,27 +24,12 @@ class AccountController extends Controller
     /**
      * Profil : mise à jour des informations.
      */
-    public function updateProfile(Request $request)
+    public function updateProfile(UpdateProfileRequest $request)
     {
         /** @var User $user */
         $user = Auth::user();
 
-        $validated = $request->validate([
-            'lastname' => ['required', 'string', 'min:2', 'max:50'],
-            'firstname' => ['required', 'string', 'min:2', 'max:50'],
-            'phone' => ['required', 'regex:/^\+?[0-9\s\-\(\)]+$/', 'min:7', 'max:20'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
-            'language' => ['required', 'string', 'max:50'],
-            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:8192'],
-        ], [
-            'lastname.min' => 'Le nom doit faire plus de 2 caractères',
-            'firstname.min' => 'Le prénom doit faire plus de 2 caractères',
-            'phone.regex' => 'Le numéro de téléphone doit être valide',
-            'email.unique' => 'Cette adresse email est déjà utilisée',
-            'avatar.image' => 'Le fichier doit être une image',
-            'avatar.mimes' => 'Formats acceptés : jpeg, png, jpg, gif, webp',
-            'avatar.max' => 'L\'image ne peut pas dépasser 8 Mo',
-        ]);
+        $validated = $request->validated();
 
         // Upload de la photo de profil
         if ($request->hasFile('avatar')) {
@@ -73,18 +58,6 @@ class AccountController extends Controller
         $user->update($validated);
 
         return back()->with('success', 'Votre profil a été mis à jour.');
-    }
-
-    /**
-     * Mon abonnement (template — système d'abonnement à venir).
-     */
-    public function subscription()
-    {
-        return view('account.subscription', [
-            'user' => Auth::user(),
-            'current' => Auth::user()->subscription,
-            'plans' => Subscription::orderBy('price')->get(),
-        ]);
     }
 
     /**
@@ -132,27 +105,8 @@ class AccountController extends Controller
     /**
      * Sécurité : changement de mot de passe.
      */
-    public function updatePassword(Request $request)
+    public function updatePassword(UpdatePasswordRequest $request)
     {
-        $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'password' => [
-                'required',
-                'string',
-                'min:8',
-                'confirmed',
-                'regex:/[a-z]/',
-                'regex:/[A-Z]/',
-                'regex:/[0-9]/',
-                'regex:/[-@$!%*#?&]/',
-            ],
-        ], [
-            'current_password.current_password' => 'Le mot de passe actuel est incorrect',
-            'password.confirmed' => 'Les mots de passe ne correspondent pas',
-            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères',
-            'password.regex' => 'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial',
-        ]);
-
         /** @var User $user */
         $user = Auth::user();
         $user->update([

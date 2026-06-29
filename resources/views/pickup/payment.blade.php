@@ -25,9 +25,15 @@
                         <span>Sous-total</span>
                         <span>{{ number_format($order->subtotal, 0, ',', ' ') }} €</span>
                     </div>
+                    @if ($order->discount > 0)
+                        <div class="summary-row">
+                            <span>Réduction Premium</span>
+                            <span>− {{ number_format($order->discount, 2, ',', ' ') }} €</span>
+                        </div>
+                    @endif
                     <div class="summary-row">
                         <span>Expédition</span>
-                        <span>{{ number_format($order->expedition, 0, ',', ' ') }} €</span>
+                        <span>{{ $order->expedition > 0 ? number_format($order->expedition, 0, ',', ' ') . ' €' : 'Offerte' }}</span>
                     </div>
                     <div class="summary-row">
                         <span>Taxe estimée</span>

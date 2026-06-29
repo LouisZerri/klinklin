@@ -28,6 +28,11 @@ class User extends Authenticatable
         'notification_ressources_et_formations',
         'notification_recommandation_de_produits',
         'notification_conseils_et_bonne_pratique',
+        'subscription_id',
+        'stripe_customer_id',
+        'stripe_subscription_id',
+        'subscription_status',
+        'subscription_ends_at',
     ];
 
     protected $hidden = [
@@ -44,7 +49,15 @@ class User extends Authenticatable
             'notification_ressources_et_formations' => 'boolean',
             'notification_recommandation_de_produits' => 'boolean',
             'notification_conseils_et_bonne_pratique' => 'boolean',
+            'subscription_ends_at' => 'datetime',
         ];
+    }
+
+    /* L'utilisateur a-t-il un abonnement payant actif ? */
+    public function hasActiveSubscription(): bool
+    {
+        return $this->subscription_status === 'active'
+            && ! is_null($this->stripe_subscription_id);
     }
 
     /* Un utilisateur peut posséder plusieurs commande */

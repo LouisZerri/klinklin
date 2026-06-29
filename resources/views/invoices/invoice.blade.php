@@ -263,6 +263,12 @@
                         <span><b>Sous-total HT : </b></span>
                         <span>{{ number_format($order->subtotal, 2, ',', ' ') }} €</span>
                     </div>
+                    @if ($order->discount > 0)
+                        <div class="totals-row">
+                            <span><b>Réduction Premium : </b></span>
+                            <span>− {{ number_format($order->discount, 2, ',', ' ') }} €</span>
+                        </div>
+                    @endif
                     <div class="totals-row">
                         <span><b>Frais d'expédition : </b></span>
                         <span>10,00 €</span>

@@ -12,6 +12,8 @@ class Subscription extends Model
     protected $fillable = [
         'name',
         'price',
+        'benefits',
+        'stripe_price_id',
         'status',
         'start_date',
         'end_date',
@@ -23,7 +25,21 @@ class Subscription extends Model
         'end_date' => 'date',
     ];
 
-    /* Cet abonnement appartient à un utilisateur */
+    /* Cette formule est-elle gratuite ? */
+    public function isFree(): bool
+    {
+        return (int) $this->price === 0;
+    }
+
+    /* Prix mensuel formaté (ex. "19,90 € / mois" ou "Gratuit"). */
+    public function priceLabel(): string
+    {
+        return $this->isFree()
+            ? 'Gratuit'
+            : number_format($this->price / 100, 2, ',', ' ') . ' € / mois';
+    }
+
+    /* Cette formule est souscrite par plusieurs utilisateurs */
     public function users()
     {
         return $this->hasMany(User::class);

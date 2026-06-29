@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
+use App\Http\Requests\Pickup\StoreAddressRequest;
+use App\Http\Requests\Pickup\UpdateInfosRequest;
 use App\Models\Article;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -32,38 +35,19 @@ class PickupController extends Controller
     }
 
     /* On stocke d'abord en sesion l'adresse de la commande */
-    public function storeAddress(Request $request)
+    public function storeAddress(StoreAddressRequest $request)
     {
-        $validated = $request->validate([
-            'address' => 'string|min:5|max:255',
-            'complement' => 'nullable|string|max:255',
-            'city' => 'string|regex:/^[\pL\s\-]+$/u|max:100',
-            'zip_code' => 'string|regex:/^[A-Za-z0-9\s\-]+$/u|max:20',
-            'order_date' => 'date|after_or_equal:today',
-            'timeslot' => 'string'
-        ], [
-            'address.min' => 'L’adresse doit contenir au moins :min caractères',
-            'address.max' => 'L’adresse ne peut pas dépasser :max caractères',
-
-            'complement.max' => 'Le complément d’adresse ne peut pas dépasser :max caractères',
-
-            'city.regex' => 'La ville ne peut contenir que des lettres, des espaces et des tirets',
-            'city.max' => 'La ville ne peut pas dépasser :max caractères',
-
-            'zip_code.regex' => 'Le code postal ne peut contenir que des lettres, chiffres, espaces et tirets',
-
-            'order_date.date' => 'La date de commande doit être une date valide',
-            'order_date.after_or_equal' => 'La date de commande ne peut pas être antérieure à aujourd’hui'
-        ]);
+        $validated = $request->validated();
 
         $order = Order::create([
             ...$validated,
             'user_id' => Auth::id(),
             'order_number' => $this->generateOrderNumber(),
-            'status' => 'En attente',
+            'status' => OrderStatus::Pending,
             'subtotal' => 0,
-            'expedition' => 10,
-            'tax' => 5,
+            // Livraison offerte pour les abonnés Premium (figée à la commande).
+            'expedition' => Auth::user()->hasActiveSubscription() ? 0 : config('pricing.expedition'),
+            'tax' => config('pricing.tax'),
         ]);
 
         if ($order) {
@@ -124,6 +108,12 @@ class PickupController extends Controller
         // Mise à jour du total dans la commande
         $order = Order::findOrFail($orderId);
         $order->subtotal = $subtotal;
+
+        // Remise Premium (-10 %) figée au moment de la commande.
+        $order->discount = Auth::user()->hasActiveSubscription()
+            ? round($subtotal * config('pricing.premium_discount'), 2)
+            : 0;
+
         $order->save();
 
         return redirect()->route('collecte_resume');
@@ -153,16 +143,9 @@ class PickupController extends Controller
         return view('pickup.recapitulatif', compact('items', 'order'));
     }
 
-    public function updateInfos(Request $request)
+    public function updateInfos(UpdateInfosRequest $request)
     {
-        $validated = $request->validate([
-            'order_date' => 'required|date|after_or_equal:today',
-            'timeslot' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'complement' => 'nullable|string|max:255',
-            'zip_code' => 'required|string|max:20',
-            'city' => 'required|string|max:100'
-        ]);
+        $validated = $request->validated();
 
         $orderId = session('order_id');
 

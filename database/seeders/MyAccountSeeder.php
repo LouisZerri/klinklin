@@ -3,11 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
-use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
-use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\InvoiceService;
 use Illuminate\Database\Seeder;
 
 class MyAccountSeeder extends Seeder
@@ -96,35 +95,10 @@ class MyAccountSeeder extends Seeder
 
             // Facture (sauf commande non payée "En attente")
             if ($status !== 'En attente') {
-                $this->generateInvoice($order->fresh('orderItems.article'), $user, $date);
+                app(InvoiceService::class)->generateForOrder($order->fresh('orderItems.article'), $date);
             }
         }
 
         $this->command->info('MyAccountSeeder : ' . count($definitions) . ' commandes créées pour ' . $user->email);
-    }
-
-    private function generateInvoice(Order $order, User $user, string $date): void
-    {
-        $total = $order->subtotal + $order->expedition + $order->tax;
-
-        $pdf = Pdf::loadView('invoices.invoice', [
-            'order' => $order,
-            'items' => $order->orderItems,
-            'total' => $total,
-        ]);
-
-        $filename = 'invoice_' . $order->id . '.pdf';
-        $pdf->save(storage_path('app/public/invoices/' . $filename));
-
-        Invoice::updateOrCreate(
-            ['order_id' => $order->id],
-            [
-                'user_id' => $user->id,
-                'reference' => 'INV-' . strtoupper(substr(md5($order->order_number), 0, 8)),
-                'invoice_date' => $date,
-                'total' => $total,
-                'pdf_path' => 'invoices/' . $filename,
-            ]
-        );
     }
 }

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@use('App\Enums\OrderStatus')
+
 @section('title', 'Mes commandes')
 
 @section('content')
@@ -41,7 +43,7 @@
                     @if ($order->subtotal == 0)
                         <div class="item">Total : 0 €</div>
                     @else
-                        <div class="item">Total : {{ number_format($order->subtotal + $order->expedition + $order->tax, 0, ',', ' ') }} €</div>
+                        <div class="item">Total : {{ number_format($order->total, 0, ',', ' ') }} €</div>
                     @endif
                 @endif
             </div>
@@ -53,16 +55,16 @@
         </div>
 
         @php
-            $steps = ['Prévu', 'Collecté', 'En nettoyage', 'Sortir pour livraison', 'Livré'];
-            // Une commande terminée est considérée comme entièrement livrée.
-            $currentStep = $order->status === 'Terminée' ? count($steps) - 1 : array_search($order->status, $steps);
+            $steps = OrderStatus::trackingSteps();
+            $currentStep = $order->status->trackingIndex();
+            $progress = $currentStep !== null ? ($currentStep / (count($steps) - 1)) * 100 : 0;
         @endphp
 
         <div class="order-details-section mt-4">
             <h3 class="section-title">Suivi de commande</h3>
         </div>
 
-        @if ($order->status === 'Annulée')
+        @if ($order->status->isCancelled())
             <div class="order-cancelled-banner">
                 <i class="fa-solid fa-circle-xmark"></i>
                 <div>
@@ -75,8 +77,7 @@
                 <div class="progress-tracker-container">
                     <div class="progress-line">
                         <div class="progress-line-active"
-                            style="width: {{ ($currentStep / (count($steps) - 1)) * 100 }}%;
-                                    --progress-height: {{ ($currentStep / (count($steps) - 1)) * 100 }}%">
+                            style="width: {{ $progress }}%; --progress-height: {{ $progress }}%">
                         </div>
                     </div>
 
@@ -85,10 +86,10 @@
                             $circleClass = '';
                             $labelClass = '';
 
-                            if ($index < $currentStep) {
+                            if ($currentStep !== null && $index < $currentStep) {
                                 $circleClass = 'completed';
                                 $labelClass = 'completed';
-                            } elseif ($index === $currentStep) {
+                            } elseif ($currentStep !== null && $index === $currentStep) {
                                 $circleClass = 'active';
                                 $labelClass = 'active';
                             }
@@ -97,7 +98,7 @@
                         <div class="step-tracker">
                             <div class="step-tracker-circle {{ $circleClass }}"></div>
                             <div class="step-tracker-label {{ $labelClass }}">
-                                {!! nl2br(e($step)) !!}
+                                {{ $step->label() }}
                             </div>
                         </div>
                     @endforeach
@@ -105,7 +106,7 @@
             </div>
         @endif
         <div class="buttons-container">
-            @if ($order->status === 'Prévu')
+            @if ($order->status->isCancellable())
                 <form action="{{ route('order.cancel', $order->id) }}" method="POST"
                     onsubmit="return confirm('Êtes-vous sûr de vouloir annuler cette commande ?')">
                     @csrf

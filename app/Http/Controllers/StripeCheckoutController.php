@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Invoice;
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Notifications\OrderConfirmation;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
+use App\Services\InvoiceService;
+use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class StripeCheckoutController extends Controller
 {
@@ -57,11 +56,11 @@ class StripeCheckoutController extends Controller
         $userId = Auth::id();
 
         $order = Order::where('user_id', $userId)
-            ->where('status', 'En attente')
+            ->where('status', OrderStatus::Pending)
             ->latest()
             ->first();
 
-        $raw = $order->subtotal + $order->expedition + $order->tax;
+        $raw = $order->total;
 
         return [
             'order' => $order,
@@ -71,79 +70,106 @@ class StripeCheckoutController extends Controller
     }
 
 
-    public function thankYou(Request $request)
+    public function thankYou(Request $request, InvoiceService $invoiceService)
     {
-        $userId = Auth::id();
-        
-        $paidOrder = Order::where('user_id', $userId)
-            ->where('status', 'En attente')
-            ->latest()
-            ->first();
-            
-        if (!$paidOrder || !session()->has('order_id')) {
+        $orderId = session('order_id');
+
+        $order = $orderId
+            ? Order::where('id', $orderId)->where('user_id', Auth::id())->first()
+            : null;
+
+        if (! $order) {
             return redirect()->route('collecte');
         }
 
-        // Envoi de la notification de confirmation de commande
-        $total = number_format($paidOrder->subtotal + $paidOrder->expedition + $paidOrder->tax, 2, ',', ' ');
-        $paidOrder->user->notify(new OrderConfirmation($paidOrder, $total));
+        // Confirme la commande seulement si le paiement a réussi.
+        // Opération idempotente : le webhook a pu la confirmer avant le retour.
+        if ($this->paymentSucceeded($order)) {
+            $this->confirmPaidOrder($order, $invoiceService);
+        }
 
-        // Génère la facture PDF et l'enregistre
-        $this->generateInvoice($paidOrder);
-
-        // La commande est payée : on planifie la collecte
-        $paidOrder->update(['status' => 'Prévu']);
-
-        // Nettoie la session
         $request->session()->forget('order_id');
-        
+
         return view('pickup.thankyou');
     }
 
-    public function generateInvoice(Order $order)
+    /**
+     * Webhook Stripe : confirmation fiable du paiement (indépendante du navigateur).
+     */
+    public function webhook(Request $request, InvoiceService $invoiceService, SubscriptionService $subscriptionService)
     {
-        // Charger les relations
-        $order->load('orderItems.article');
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+                $request->getContent(),
+                $request->header('Stripe-Signature'),
+                config('stripe.webhook_secret')
+            );
+        } catch (\Throwable $e) {
+            return response('Signature invalide', 400);
+        }
 
-        // Calcul du total
-        $total = ($order->subtotal + $order->expedition + $order->tax);
+        switch ($event->type) {
+            // Paiement d'une commande ponctuelle
+            case 'payment_intent.succeeded':
+                $order = Order::where('payment_intent_id', $event->data->object->id)->first();
+                if ($order) {
+                    $this->confirmPaidOrder($order, $invoiceService);
+                }
+                break;
 
-        // Regrouper par article_id
-        $groupedItems = $order->orderItems->groupBy('article_id')->map(function ($items) {
-            
-            $first = $items->first();
+            // Souscription Premium validée
+            case 'checkout.session.completed':
+                $session = $event->data->object;
+                if (($session->mode ?? null) === 'subscription') {
+                    $subscriptionService->activate(
+                        (int) $session->client_reference_id,
+                        $session->customer,
+                        $session->subscription
+                    );
+                }
+                break;
 
-            return (object) [
-                'article' => $first->article,
-                'quantity' => $items->sum('quantity'),
-                'unit_price' => $first->unit_price,
-                'total' => $items->sum(fn($item) => $item->unit_price * $item->quantity),
-            ];
-        });
+            // Abonnement résilié
+            case 'customer.subscription.deleted':
+                $subscriptionService->deactivate($event->data->object->id);
+                break;
+        }
 
-        $pdf = Pdf::loadView('invoices.invoice', [
-            'order' => $order,
-            'total' => $total,
-            'items' => $groupedItems,
-        ]);
+        return response('OK', 200);
+    }
 
-        // Définir le chemin du fichier
-        $filename = 'invoice_' . $order->id . '.pdf';
-        $pdfPath = storage_path('app/public/invoices/' . $filename);
+    /**
+     * Confirme une commande payée : notification, facture, statut.
+     * Idempotent (ne fait rien si la commande n'est plus "En attente").
+     */
+    private function confirmPaidOrder(Order $order, InvoiceService $invoiceService): void
+    {
+        if ($order->status !== OrderStatus::Pending) {
+            return;
+        }
 
-        // Sauvegarder le fichier PDF
-        $pdf->save($pdfPath);
+        $total = number_format($order->total, 2, ',', ' ');
+        $order->user->notify(new OrderConfirmation($order, $total));
+        $invoiceService->generateForOrder($order);
+        $order->update(['status' => OrderStatus::Scheduled]);
+    }
 
+    /**
+     * Vérifie auprès de Stripe que le PaymentIntent de la commande a réussi.
+     */
+    private function paymentSucceeded(Order $order): bool
+    {
+        if (! $order->payment_intent_id) {
+            return false;
+        }
 
-        // Enregistrer dans la base de données
-        $invoice = new Invoice();
-        $invoice->user_id = $order->user_id;
-        $invoice->order_id = $order->id;
-        $invoice->reference = 'INV-' . strtoupper(Str::random(8));
-        $invoice->invoice_date = Carbon::now();
-        $invoice->total = $total;
-        $invoice->pdf_path = 'invoices/' . $filename;
-        $invoice->save();
+        try {
+            \Stripe\Stripe::setApiKey(config('stripe.secret_key'));
+
+            return \Stripe\PaymentIntent::retrieve($order->payment_intent_id)->status === 'succeeded';
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 
     public function cancelOrder($orderId)
@@ -152,7 +178,7 @@ class StripeCheckoutController extends Controller
             ->where('user_id', Auth::id())
             ->firstOrFail();
 
-        if ($order->status !== 'Prévu') {
+        if ($order->status !== OrderStatus::Scheduled) {
             return redirect()->route('dashboard')->with('error', 'La commande ne peut pas être remboursée');
         }
 
@@ -171,7 +197,7 @@ class StripeCheckoutController extends Controller
                 'reason' => 'requested_by_customer',
             ]);
 
-            $order->status = 'Annulée';
+            $order->status = OrderStatus::Cancelled;
             $order->save();
 
             return redirect()->route('dashboard')->with('success', 'Commande annulée et remboursée avec succès');

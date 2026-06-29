@@ -11,7 +11,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // Le webhook Stripe est authentifié par signature, pas par CSRF.
+        $middleware->validateCsrfTokens(except: [
+            'stripe/webhook',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

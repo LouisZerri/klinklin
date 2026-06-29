@@ -22,3 +22,28 @@
     letter-spacing: 0.03em;
     color: var(--text-white);
 }
+
+/* Bandeau "démo portfolio" (page d'accueil) */
+.demo-banner {
+    background: linear-gradient(135deg, var(--violet-normal), var(--violet-dark));
+    color: #fff;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 10px 16px;
+    line-height: 1.4;
+}
+
+.demo-banner i {
+    color: var(--mint-dark);
+    margin-right: 6px;
+}
+
+.demo-banner strong {
+    color: var(--mint-dark);
+}
+
+@media (max-width: 575px) {
+    .demo-banner {
+        font-size: 0.8rem;
+    }
+}

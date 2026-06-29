@@ -16,23 +16,26 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(ArticleSeeder::class);
 
-        $subscription = Subscription::firstOrCreate(
-            ['name' => 'Standard'],
+        // Une seule formule payante : Premium. L'absence d'abonnement = offre gratuite.
+        Subscription::updateOrCreate(
+            ['name' => 'Premium'],
             [
-                'price' => 0,
+                'price' => 999,
                 'status' => 'active',
+                'stripe_price_id' => config('stripe.premium_price_id'),
+                'benefits' => [
+                    'Livraison offerte sur chaque commande',
+                    '−10 % sur chaque commande',
+                    'Collecte prioritaire',
+                    'Livraison express en 24h',
+                    'Support client prioritaire',
+                ],
                 'start_date' => now(),
             ]
         );
 
-        Subscription::firstOrCreate(
-            ['name' => 'Premium'],
-            [
-                'price' => 1990,
-                'status' => 'active',
-                'start_date' => now(),
-            ]
-        );
+        // On retire l'ancienne formule "Standard" si elle existe.
+        Subscription::where('name', 'Standard')->delete();
 
         User::updateOrCreate(
             ['email' => 'test@example.com'],
@@ -41,7 +44,7 @@ class DatabaseSeeder extends Seeder
                 'firstname' => 'Utilisateur',
                 'phone' => '+33600000000',
                 'password' => Hash::make('password'),
-                'subscription_id' => $subscription->id,
+                'subscription_id' => null,
             ]
         );
 

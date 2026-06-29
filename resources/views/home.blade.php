@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('content')
+    <div class="demo-banner">
+        <i class="fa-solid fa-flask"></i>
+        Démo portfolio — ce service n'est plus en production (arrêté par l'entreprise).
+        Les paiements sont en <strong>mode test</strong>, aucune transaction réelle.
+    </div>
+
     @include('partials.navbar')
 
     <section class="hero-section position-relative">

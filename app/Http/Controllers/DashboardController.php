@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
 use App\Models\Invoice;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class DashboardController extends Controller
 
             // On ne supprime qu'une commande non payée (statut En attente).
             // Les commandes payées puis remboursées restent en "Annulée".
-            if ($order && $order->status === 'En attente') {
+            if ($order && $order->status === OrderStatus::Pending) {
                 $order->delete(); // supprime aussi les order_items (cascade)
             }
 
@@ -37,14 +38,15 @@ class DashboardController extends Controller
     {
         $userId = Auth::id();
 
+        $excluded = [OrderStatus::Cancelled->value, OrderStatus::Delivered->value];
+
         $ordersInProgress = Order::where('user_id', $userId)
-            ->whereNotIn('status', ['Annulée', 'Livré'])
+            ->whereNotIn('status', $excluded)
             ->count();
 
         $latestPayments = Order::where('user_id', $userId)
-            ->whereNotIn('status', ['Livré', 'Annulée'])
-            ->get()
-            ->sum(fn($order) => $order->subtotal + $order->expedition + $order->tax);
+            ->whereNotIn('status', $excluded)
+            ->sum(DB::raw('subtotal + expedition + tax'));
 
         $invoices = Invoice::where('user_id', $userId)->count();
 

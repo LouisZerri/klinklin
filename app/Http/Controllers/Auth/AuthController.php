@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\SendResetLinkRequest;
 use App\Models\User;
 use App\Notifications\CustomResetPassword;
 use Illuminate\Http\Request;
@@ -35,36 +39,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $request->validate([
-            'lastname' => ['required', 'string', 'min:2', 'max:50'],
-            'firstname' => ['required', 'string', 'min:2', 'max:50'],
-            'phone' => ['required', 'regex:/^\+?[0-9\s\-\(\)]+$/', 'min:7', 'max:20'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => [
-                'required',
-                'string',
-                'min:8',
-                'regex:/[a-z]/',
-                'regex:/[A-Z]/',
-                'regex:/[0-9]/',
-                'regex:/[-@$!%*#?&]/',
-            ],
-        ], [
-            'lastname.min' => 'Le nom doit faire plus de 2 caractères',
-            'lastname.max' => 'Le nom ne peut pas dépasser 50 caractères',
-            'lastname.string' => 'Le nom ne doit pas être une valeur numérique',
-            'firstname.min' => 'Le prénom doit faire plus de 2 caractères',
-            'firstname.max' => 'Le prénom ne peut pas dépasser 50 caractères',
-            'firstname.string' => 'Le prénom ne doit pas être une valeur numérique',
-            'email.unique' => 'Cette adresse email est déjà utilisée',
-            'phone.min' => 'Le numéro de téléphone est trop court',
-            'phone.regex' => 'Le numéro de téléphone doit être valide',
-            'password.min' => 'Le mot de passe doit contenir au minimum 8 caractères',
-            'password.regex' => 'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial',
-        ]);
-
         User::create([
             'lastname' => $request->lastname,
             'firstname' => $request->firstname,
@@ -78,12 +54,9 @@ class AuthController extends Controller
     }
 
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->validated();
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
@@ -103,16 +76,8 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    public function sendResetLink(Request $request)
+    public function sendResetLink(SendResetLinkRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-        ], [
-            'email.required' => 'Veuillez entrer une adresse email',
-            'email.email' => 'Adresse email invalide',
-            'email.exists' => 'Aucun compte trouvé avec cet email',
-        ]);
-
         // 1. Récupère l'utilisateur
         $user = User::where('email', $request->email)->first();
 
@@ -125,26 +90,8 @@ class AuthController extends Controller
         return back()->with('success', 'Le lien de réinitialisation a été envoyé à votre adresse email');
     }
 
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => [
-                'required',
-                'string',
-                'min:8',
-                'regex:/[a-z]/',
-                'regex:/[A-Z]/',
-                'regex:/[0-9]/',
-                'regex:/[-@$!%*#?&]/',
-            ]
-        ], [
-            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères',
-            'password.confirmed' => 'Les mots de passe ne correspondent pas',
-            'password.regex' => 'Le mot de passe doit contenir une majuscule, une minuscule, un chiffre et un caractère spécial',
-        ]);
-
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
